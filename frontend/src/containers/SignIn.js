@@ -1,8 +1,10 @@
-import Title from "../components/Title";
+
 
 const SignIn = () => {
     return (
-        <Title />
+        <>
+            <h1>SIGNIN</h1>
+        </>
     )
 };
 

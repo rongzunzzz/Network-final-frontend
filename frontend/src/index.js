@@ -4,10 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { MarketProvider } from './containers/hooks/useMarket';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <App />
+        <MarketProvider>
+            <App />
+        </MarketProvider>
     </React.StrictMode>
 );
 

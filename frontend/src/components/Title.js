@@ -7,12 +7,13 @@ const Wrapper = styled.div`
     
     h1 {
         margin: 0;
-        margin-right: 20px;
+        margin-top: 40px;
+        margin-bottom: 10px;
         font-size: 3em;
     }
 `;
 const Title = () => ( 
-    <Wrapper><h1>TITLE</h1></Wrapper> 
+    <Wrapper><h1>OUR COOL TITLE</h1></Wrapper> 
 );
 
 export default Title;
