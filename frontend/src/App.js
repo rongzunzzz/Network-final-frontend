@@ -24,9 +24,10 @@ const App = () => {
     const { signedIn } = useMarket();
 
     return ( <>
-        <Title />
-        {/* <Wrapper></Wrapper>     */}
-        { signIn? <Market /> : <SignIn /> }
+        <Wrapper>
+            <Title />
+            { signIn? <Market /> : <SignIn /> }
+        </Wrapper>    
     </>)
 };
 

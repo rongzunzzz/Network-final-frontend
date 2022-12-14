@@ -3,17 +3,22 @@ import { createContext, useContext, useEffect, useState } from "react";
 const MarketContext = createContext({
     signedIn: false,
     allPosts: [],
+
+    setSignedIn: () => {},
+    setAllPosts: () => {},
 })
 
 const MarketProvider = (props) => {
     const [signedIn, setSignedIn] = useState(false);
     const [allPosts, setAllPosts] = useState([]);
 
+    
+
     return (
         <MarketContext.Provider
             value={{
                 signedIn, setSignedIn, 
-                allPosts,
+                allPosts, setAllPosts,
             }}
             {...props}
         />

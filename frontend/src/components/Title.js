@@ -7,8 +7,8 @@ const Wrapper = styled.div`
     
     h1 {
         margin: 0;
-        margin-top: 40px;
-        margin-bottom: 10px;
+        margin-top: 20px;
+        margin-bottom: 50px;
         font-size: 3em;
     }
 `;
