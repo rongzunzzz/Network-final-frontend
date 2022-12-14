@@ -1,0 +1,13 @@
+{
+  "name": "Network-final-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rongzunzzz/Network-final-frontend.git",
+  "author": "rongzunzzz",
+  "license": "MIT",
+
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server"
+  }
+}
