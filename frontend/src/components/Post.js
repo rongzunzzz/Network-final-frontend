@@ -1,13 +1,11 @@
 import Item from "./Item";
 
-const Post = () => {
+const Post = ({ title, content, img }) => {
     return (
         <div>
-            <h4>Post Title</h4>
-            <p>Post Content</p>
-            <Item />
-            <Item />
-            <Item />
+            <h4>{`Title: ${title}`}</h4>
+            <p>{`Content: ${content}`}</p>
+            <Item img={img} />
             <hr/>
             <br/>
         </div>

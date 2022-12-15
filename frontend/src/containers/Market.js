@@ -6,11 +6,13 @@ import Profile from './Profile';
 import AddPostModal from '../components/AddPostModal';
 import axios from "../api";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMarket } from './hooks/useMarket';
 
 const AllPostWrapper = styled.div` 
+    height: 600px;
     width: 800px;
+    overflow: auto;
     border: solid black 1px;
 
     margin-top: 30px;
@@ -26,19 +28,6 @@ const FunctionBarWrapper = styled.div`
     align-items: center;
 `;
 
-const ProfileWrapper = styled.div`
-    height: 250px;
-    width: 300px;
-    background-color: grey;
-
-    position: absolute;
-    right: 20px;
-    top: 60px;
-
-    display: flex;
-    flex-direction: column;
-`;
-
 const { Search } = Input;
 const StyledSearchBar = styled(Search)`
     width: 400px;
@@ -47,7 +36,7 @@ const StyledSearchBar = styled(Search)`
 `;
 
 const Market = () => {
-    const { allPosts, setAllPosts } = useMarket();
+    const { allPosts, addMarketPosts } = useMarket();
 
     const [addPostModalOpen, setAddPostModalOpen] = useState(false);
     const [bidModalOpen, setBidModalOpen] = useState(false); // 還是要放在 Post.js，但可能會變 container
@@ -60,6 +49,19 @@ const Market = () => {
         console.log("Add a post!");
         setAddPostModalOpen(true);
     }
+
+    const displayPosts = () => {
+        return allPosts.map((post, index) => { 
+            return <Post key={index} 
+                         title={post.postTitle} 
+                         content={post.postContent} 
+                         img={post.postImg} />  
+        })
+    }
+
+    useEffect(() => {
+        displayPosts();
+    }, [allPosts])
 
     return (
         <>
@@ -79,6 +81,10 @@ const Market = () => {
             </FunctionBarWrapper>
             <AddPostModal 
                 open={addPostModalOpen}
+                onCreate={(title, content, img) => {
+                    addMarketPosts(title, content, img);
+                    setAddPostModalOpen(false);
+                }}
                 onCancel={() => {
                     setAddPostModalOpen(false);
                 }} >
@@ -87,10 +93,13 @@ const Market = () => {
             <Profile />
             
             <AllPostWrapper>
-                <h3>這裡只是暫時匡起來，之後應該會去找 scrollable 模板</h3>
+                {displayPosts()}
+                {/* <Post />
                 <Post />
                 <Post />
                 <Post />
+                <Post />
+                <Post /> */}
             </AllPostWrapper>
         </>
     )

@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button } from 'antd';
 
+import axios from '../api';
+
 const Wrapper = styled.div`
     height: 250px;
     width: 300px;
-    background-color: grey;
+    background-color: #c5cbd4;
 
     position: absolute;
     right: 20px;
@@ -15,12 +17,24 @@ const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-const PhotoNameWrapper = styled.div`
-    display: flex;
+const StyledPhoto = styled(Avatar)`
+    position: absolute;
+    top: 10px;
+    left: 10px;
+`;
+
+const StyledName = styled.h5`
+    position: absolute;
+    top: 10px;
+    left: 100px;
 `;
 
 const StyledButton = styled(Button)`
     width: 150px;
+
+    position: absolute;
+    bottom: 20px;
+    left: 75px;
 `;
 
 const Profile = () => {
@@ -32,12 +46,10 @@ const Profile = () => {
 
     return (
         <Wrapper>
-            <PhotoNameWrapper>
-                <Avatar shape="square" 
-                        size={80}
-                        icon={<UserOutlined />} />
-                <p>MY NAME</p>
-            </PhotoNameWrapper>
+            <StyledPhoto shape="square" 
+                         size={80}
+                         icon={<UserOutlined />} />
+            <StyledName>MY NAME</StyledName>
             <StyledButton 
                 type="primary" 
                 size={'large'}

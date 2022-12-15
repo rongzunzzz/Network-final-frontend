@@ -1,6 +1,6 @@
-const Item = () => {
+const Item = ({ img }) => {
     return (
-        <div>This is an Item</div>
+        <img src={img} />
     )
 };
 
