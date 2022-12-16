@@ -16,10 +16,6 @@ const AllPostWrapper = styled.div`
     border: solid black 1px;
 
     margin-top: 30px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 `;
 
 const FunctionBarWrapper = styled.div`
@@ -81,7 +77,14 @@ const Market = () => {
             </FunctionBarWrapper>
             <AddPostModal 
                 open={addPostModalOpen}
-                onCreate={(title, content, img) => {
+                onCreate={  (title, content, img) => { 
+                    // const { data: {  
+                        
+                    // }} = await axios.post('/post', {
+                    //     title,
+                    //     content,
+                    //     img
+                    // })
                     addMarketPosts(title, content, img);
                     setAddPostModalOpen(false);
                 }}
@@ -92,15 +95,7 @@ const Market = () => {
             
             <Profile />
             
-            <AllPostWrapper>
-                {displayPosts()}
-                {/* <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post /> */}
-            </AllPostWrapper>
+            <AllPostWrapper>{displayPosts()}</AllPostWrapper>
         </>
     )
 };
