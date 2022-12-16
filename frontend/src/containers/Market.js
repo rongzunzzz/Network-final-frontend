@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Input, Button } from 'antd';
 
-import Post from "../components/Post";
+import Post from './Post';
 import Profile from './Profile';
 import AddPostModal from '../components/AddPostModal';
 import axios from "../api";
@@ -35,7 +35,6 @@ const Market = () => {
     const { allPosts, addMarketPosts } = useMarket();
 
     const [addPostModalOpen, setAddPostModalOpen] = useState(false);
-    const [bidModalOpen, setBidModalOpen] = useState(false); // 還是要放在 Post.js，但可能會變 container
 
     const handleSearch = (value) => {
         console.log(`Search for: ${value}`);
