@@ -10,9 +10,11 @@ import { useMarket } from "./hooks/useMarket";
 
 const PostWrapper = styled.div`
     height: 200px;
-    width: 750px;
-    border: solid black 1px;
+    width: 95%;
+    background-color: #ebf0f2;
+    border: solid white 1px;
     border-radius: 4px;
+    box-shadow: 2px 2px 4px 4px #ccc;
 
     margin: 5px 0 5px 25px;
 
@@ -21,7 +23,7 @@ const PostWrapper = styled.div`
     align-items: center;
 `;
 
-const TitleDescWrapper = styled.div`
+const DescriptionWrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
@@ -31,6 +33,7 @@ const BidPriceWrapper = styled.div`
     width: 100px;
     overflow: auto;
     background-color: #c5cbd4;
+    border-radius: 4px;
 
     text-align: center;
 
@@ -70,12 +73,12 @@ const Post = ({ seller, title, content, price, img }) => {
 
     return (
         <PostWrapper>
-            <TitleDescWrapper>
+            <DescriptionWrapper>
                 <h3>{`Title: ${title}`}</h3>
                 <h4>{`Seller: ${seller}`}</h4>
                 <p>{`Content: ${content}`}</p>
                 <p>{`Recommended price: ${price}`}</p>
-            </TitleDescWrapper>
+            </DescriptionWrapper>
             <Item img={img} />
             <Button 
                 type="primary" 

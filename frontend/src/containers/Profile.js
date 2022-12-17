@@ -7,6 +7,7 @@ import MyPostModal from '../components/MyPostModal';
 import axios from '../api';
 
 import { useState } from 'react';
+import { useMarket } from './hooks/useMarket';
 
 const Wrapper = styled.div`
     height: 250px;
@@ -47,8 +48,9 @@ const Profile = ({ myName }) => {
     const [myPosts, setMyPosts] = useState([]);
     const [myPostModalOpen, setMyPostModalOpen] = useState(false);
 
-    const displayMyPosts = () => { // 還要用個 modal 或個 wrapper 包起來顯示
-        return myPosts.map((post, index) => { 
+    const { allPosts } = useMarket(); // 僅用來測試 view my post
+    const displayMyPosts = () => { 
+        return allPosts.map((post, index) => { // 應是 myPosts，如果看到 allPosts 表示在測試
             return <Post key={index} 
                          seller={myName}
                          title={post.postTitle} 
@@ -66,7 +68,7 @@ const Profile = ({ myName }) => {
         // const {
         //     data: { posts } // an array of { seller, title, content, price, img } 這些會組成一個一個的 <Post> 
         // } = await axios.get('/myposts', {
-        //     myName,
+        //     myName, // 依據 "myName" 這個 string(目前不是id)，去後端把我的 post 打包成一個陣列 posts[] 傳回來
         // })
         // setMyPosts(posts);
 
@@ -91,7 +93,8 @@ const Profile = ({ myName }) => {
                 }}
                 onCancel={() => {
                     setMyPostModalOpen(false);
-                }} >
+                }}
+                displayMyPosts={displayMyPosts} >
             </MyPostModal>
         </Wrapper>
     );

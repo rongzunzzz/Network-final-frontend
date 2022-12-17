@@ -87,9 +87,10 @@ const Market = () => {
             <AddPostModal 
                 open={addPostModalOpen}
                 onCreate={  (title, content, price, img) => { 
+                    // 這裡只單純存進 DB，在新增的當下只依靠前端 render 試試看，希望不要出事
                     // const { 
-                    //     data: {  }
-                    // } = await axios.post('/post', {
+                    //     data: {  } // 或許可以是一個新增成功的彈出訊息
+                    // } = await axios.post('/post', { 
                     //     myName, // name of who posts the post
                     //     title,
                     //     content,

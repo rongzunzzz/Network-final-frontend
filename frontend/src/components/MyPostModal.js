@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Modal } from "antd";
 
+import Post from "../containers/Post";
+
 const MODAL_HEIGHT = 600;
 const MODAL_WIDTH = 1000;
 
@@ -12,7 +14,8 @@ const MyPostsWrapper = styled.div`
     border-radius: 10px;
 `;
 
-const MyPostModal = ({ open, onOk, onCancel }) => {
+const MyPostModal = ({ open, onOk, onCancel, displayMyPosts }) => {
+
     return <Modal
         title="My Posts"
         centered
@@ -23,6 +26,8 @@ const MyPostModal = ({ open, onOk, onCancel }) => {
         bodyStyle={{height: MODAL_HEIGHT}}
     >
         <MyPostsWrapper>
+            {displayMyPosts()}
+            {/* <p>some contents...</p>
             <p>some contents...</p>
             <p>some contents...</p>
             <p>some contents...</p>
@@ -52,8 +57,7 @@ const MyPostModal = ({ open, onOk, onCancel }) => {
             <p>some contents...</p>
             <p>some contents...</p>
             <p>some contents...</p>
-            <p>some contents...</p>
-            <p>some contents...</p>
+            <p>some contents...</p> */}
         </MyPostsWrapper>
         
     </Modal>
