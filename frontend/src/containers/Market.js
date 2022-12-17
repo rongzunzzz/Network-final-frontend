@@ -14,6 +14,7 @@ const AllPostWrapper = styled.div`
     width: 800px;
     overflow: auto;
     border: solid black 1px;
+    border-radius: 6px;
 
     margin-top: 30px;
 `;
@@ -32,7 +33,7 @@ const StyledSearchBar = styled(Search)`
 `;
 
 const Market = () => {
-    const { allPosts, addMarketPosts } = useMarket();
+    const { myName, allPosts, setAllPosts, addMarketPosts } = useMarket();
 
     const [addPostModalOpen, setAddPostModalOpen] = useState(false);
 
@@ -45,17 +46,26 @@ const Market = () => {
         setAddPostModalOpen(true);
     }
 
-    const displayPosts = () => {
+    const displayAllPosts =  () => {
+        // const {
+        //     data: { posts } // an array of { seller, title, content, img, bidPrices[] }
+        // } = await axios.get('/allposts', {
+
+        // })
+        // setAllPosts(posts);
+
         return allPosts.map((post, index) => { 
             return <Post key={index} 
+                         seller={myName}
                          title={post.postTitle} 
                          content={post.postContent} 
+                         price={post.recommendedPrice}
                          img={post.postImg} />  
         })
     }
 
     useEffect(() => {
-        displayPosts();
+        displayAllPosts();
     }, [allPosts])
 
     return (
@@ -76,15 +86,17 @@ const Market = () => {
             </FunctionBarWrapper>
             <AddPostModal 
                 open={addPostModalOpen}
-                onCreate={  (title, content, img) => { 
-                    // const { data: {  
-                        
-                    // }} = await axios.post('/post', {
+                onCreate={  (title, content, price, img) => { 
+                    // const { 
+                    //     data: {  }
+                    // } = await axios.post('/post', {
+                    //     myName, // name of who posts the post
                     //     title,
                     //     content,
-                    //     img
+                    //     price, // recommended sold price
+                    //     img, // file url
                     // })
-                    addMarketPosts(title, content, img);
+                    addMarketPosts(myName, title, content, price, img);
                     setAddPostModalOpen(false);
                 }}
                 onCancel={() => {
@@ -92,9 +104,9 @@ const Market = () => {
                 }} >
             </AddPostModal>
             
-            <Profile />
+            <Profile myName={myName}/>
             
-            <AllPostWrapper>{displayPosts()}</AllPostWrapper>
+            <AllPostWrapper>{displayAllPosts()}</AllPostWrapper>
         </>
     )
 };

@@ -27,8 +27,8 @@ const AddPostModal = ({ open, onCreate, onCancel }) => {
                         // console.log(values)
                         // console.log(fileUrl)
                         
-                        const { postTitle, postContent } = values;
-                        onCreate(postTitle, postContent, fileUrl);
+                        const { postTitle, postContent, recommendedPrice } = values;
+                        onCreate(postTitle, postContent, recommendedPrice, fileUrl);
 
                     }).catch((e) => {
                         window.alert(e);
@@ -72,6 +72,18 @@ const AddPostModal = ({ open, onCreate, onCancel }) => {
                     ]} 
                 >
                     <input type="file" onChange={handleChange} />
+                </Form.Item>
+                <Form.Item 
+                    name="recommendedPrice"
+                    label="Recommended Price"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Error: Please enter some recommended price!",
+                        },
+                    ]} 
+                >
+                    <Input />
                 </Form.Item>
                 {/* <Form.Item 
                     // name={['0']}

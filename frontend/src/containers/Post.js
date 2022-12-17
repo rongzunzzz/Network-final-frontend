@@ -3,16 +3,18 @@ import { Button } from "antd";
 
 import Item from "../components/Item";
 import BidModal from "../components/BidModal";
+import axios from "../api";
 
 import { useState } from "react";
 import { useMarket } from "./hooks/useMarket";
 
 const PostWrapper = styled.div`
     height: 200px;
-    width: 700px;
+    width: 750px;
     border: solid black 1px;
+    border-radius: 4px;
 
-    margin: 5px 0 5px 50px;
+    margin: 5px 0 5px 25px;
 
     display: flex;
     justify-content: space-around;
@@ -25,17 +27,21 @@ const TitleDescWrapper = styled.div`
 `;
 
 const BidPriceWrapper = styled.div`
-    height: 100px;
+    height: 150px;
     width: 100px;
+    overflow: auto;
     background-color: #c5cbd4;
 
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
+    text-align: center;
+
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-around;
+    // align-items: center;
+    // flex-wrap: wrap;
 `;
 
-const Post = ({ title, content, img }) => {
+const Post = ({ seller, title, content, price, img }) => {
 
     const { allPosts, addBidPrices } = useMarket();
 
@@ -47,10 +53,18 @@ const Post = ({ title, content, img }) => {
 
     const displayBidPrices = () => {
         return allPosts.map((e) => {
-            return e.postTitle === title ?  
-                e.bidPrices.map((p) => { 
-                    return <p>{`${p}`}</p>
-                }) : <p>{`NO BIDS`}</p> 
+            return e.postTitle === title ? (
+                e.bidPrices.length === 0 ? (
+                    // <p>{`NO BIDS`}</p> 
+                    <></>
+                ) : (
+                    <BidPriceWrapper> 
+                    { e.bidPrices.map( (p, index) => ( 
+                        <p key={index}>{`${p}`}</p> 
+                    ) ) }
+                    </BidPriceWrapper>
+                ) 
+            ) : (<></>)
         })
     }
 
@@ -58,7 +72,9 @@ const Post = ({ title, content, img }) => {
         <PostWrapper>
             <TitleDescWrapper>
                 <h3>{`Title: ${title}`}</h3>
+                <h4>{`Seller: ${seller}`}</h4>
                 <p>{`Content: ${content}`}</p>
+                <p>{`Recommended price: ${price}`}</p>
             </TitleDescWrapper>
             <Item img={img} />
             <Button 
@@ -66,11 +82,23 @@ const Post = ({ title, content, img }) => {
                 size={'large'}
                 onClick={handleBid} >Bid
             </Button>
-            <BidPriceWrapper>{displayBidPrices()}</BidPriceWrapper>
+            
+            {displayBidPrices()}
+            
             <BidModal 
                 open={bidModalOpen}
-                onCreate={(price) => { 
-                    addBidPrices(title, content, img, price)
+                onCreate={  (bPrice) => { 
+                    // const {
+                    //     data: {  }
+                    // } = await axios.post('/bid', { 
+                    //     title,
+                    //     content,
+                    //     price, // recommended sold price
+                    //     img, // file url
+                    //     bPrice, // add this bid price to the bidPrices[] of this <Post>
+                    // })
+
+                    addBidPrices(title, content, price, img, bPrice)
                     setBidModalOpen(false);
                 }}
                 onCancel={() => {
