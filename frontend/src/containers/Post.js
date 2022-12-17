@@ -30,7 +30,7 @@ const DescriptionWrapper = styled.div`
 
 const BidPriceWrapper = styled.div`
     height: 150px;
-    width: 100px;
+    width: 120px;
     overflow: auto;
     background-color: #c5cbd4;
     border-radius: 4px;
@@ -46,7 +46,7 @@ const BidPriceWrapper = styled.div`
 
 const Post = ({ seller, title, content, price, img }) => {
 
-    const { allPosts, addBidPrices } = useMarket();
+    const { myName, allPosts, addBidPrices } = useMarket();
 
     const [bidModalOpen, setBidModalOpen] = useState(false); 
 
@@ -63,7 +63,7 @@ const Post = ({ seller, title, content, price, img }) => {
                 ) : (
                     <BidPriceWrapper> 
                     { e.bidPrices.map( (p, index) => ( 
-                        <p key={index}>{`${p}`}</p> 
+                        <p key={index}>{`Bid ${index+1}: ${p}`}</p> 
                     ) ) }
                     </BidPriceWrapper>
                 ) 

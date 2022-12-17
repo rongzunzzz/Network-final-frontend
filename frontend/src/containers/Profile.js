@@ -63,8 +63,6 @@ const Profile = ({ myName }) => {
     const handleViewMyPosts =  () => {
         console.log("view my post")
 
-        setMyPostModalOpen(true);
-        
         // const {
         //     data: { posts } // an array of { seller, title, content, price, img } 這些會組成一個一個的 <Post> 
         // } = await axios.get('/myposts', {
@@ -73,6 +71,8 @@ const Profile = ({ myName }) => {
         // setMyPosts(posts);
 
         // displayMyPosts();
+
+        setMyPostModalOpen(true);
     }
 
     return (

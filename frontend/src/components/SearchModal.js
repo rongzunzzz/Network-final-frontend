@@ -12,10 +12,9 @@ const MyPostsWrapper = styled.div`
     border-radius: 10px;
 `;
 
-const MyPostModal = ({ open, onOk, onCancel, displayMyPosts }) => {
-
+const SearchModal = ({ open, onOk, onCancel, displaySearchResult }) => {
     return <Modal
-        title="My Posts"
+        title="Search Results"
         centered
         open={open}
         onOk={onOk}
@@ -24,10 +23,19 @@ const MyPostModal = ({ open, onOk, onCancel, displayMyPosts }) => {
         bodyStyle={{height: MODAL_HEIGHT}}
     >
         <MyPostsWrapper>
-            {displayMyPosts()}
+            {displaySearchResult}
+            <p>Search result...</p>
+            <p>Search result...</p>
+            <p>Search result...</p>
+            <p>Search result...</p>
+            <p>Search result...</p>
+            <p>Search result...</p>
+            <p>Search result...</p>
+            <p>Search result...</p>
+            <p>Search result...</p>
         </MyPostsWrapper>
         
     </Modal>
 }
 
-export default MyPostModal;
+export default SearchModal;

@@ -23,7 +23,7 @@ const makePost = (name, title, content, price, img) => ({
 })
 
 const MarketProvider = (props) => {
-    const [myName, setMyName] = useState("MyName")
+    const [myName, setMyName] = useState("MyName") // current user name
     const [signedIn, setSignedIn] = useState(false);
     const [allPosts, setAllPosts] = useState([]); // { seller, title, content, img, bidPrices[] }
 

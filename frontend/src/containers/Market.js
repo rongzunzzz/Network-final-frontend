@@ -4,6 +4,7 @@ import { Input, Button } from 'antd';
 import Post from './Post';
 import Profile from './Profile';
 import AddPostModal from '../components/AddPostModal';
+import SearchModal from '../components/SearchModal';
 import axios from "../api";
 
 import { useState, useEffect } from 'react';
@@ -36,9 +37,20 @@ const Market = () => {
     const { myName, allPosts, setAllPosts, addMarketPosts } = useMarket();
 
     const [addPostModalOpen, setAddPostModalOpen] = useState(false);
+    const [searchModalOpen, setSearchModalOpen] = useState(false);
+    const [searchResult, setSearchResult] = useState([]);
 
-    const handleSearch = (value) => {
+    const handleSearch =  (value) => {
         console.log(`Search for: ${value}`);
+
+        // const {
+        //     data: { posts } // an array of { seller, title, content, price, img } 
+        // } = await axios.get('/search', {
+        //     value, // 依據 title 這個 string(目前不是id)，去後端把 search 的 post 打包成一個陣列 posts[] 傳回來
+        // })
+        // setSearchResult(posts);
+
+        setSearchModalOpen(true);
     }
 
     const handleAddPost = () => {
@@ -46,7 +58,7 @@ const Market = () => {
         setAddPostModalOpen(true);
     }
 
-    const displayAllPosts =  () => {
+    const displayPosts =  (displayedPosts) => {
         // const {
         //     data: { posts } // an array of { seller, title, content, img, bidPrices[] }
         // } = await axios.get('/allposts', {
@@ -54,7 +66,7 @@ const Market = () => {
         // })
         // setAllPosts(posts);
 
-        return allPosts.map((post, index) => { 
+        return displayedPosts.map((post, index) => { 
             return <Post key={index} 
                          seller={myName}
                          title={post.postTitle} 
@@ -65,7 +77,7 @@ const Market = () => {
     }
 
     useEffect(() => {
-        displayAllPosts();
+        displayPosts(allPosts);
     }, [allPosts])
 
     return (
@@ -78,6 +90,16 @@ const Market = () => {
                     size="large"
                     onSearch={handleSearch}
                 />
+                <SearchModal
+                    open={searchModalOpen}
+                    onOk={() => {
+                        setSearchModalOpen(false);
+                    }}
+                    onCancel={() => {
+                        setSearchModalOpen(false);
+                    }}
+                    displaySearchResult={displayPosts(allPosts)} > {/*應是 myPosts，如果看到 allPosts 表示在測試*/}
+                </SearchModal>
                 <Button // 要有 { title, content, item[] }
                     type="primary" 
                     size={'large'}
@@ -107,7 +129,7 @@ const Market = () => {
             
             <Profile myName={myName}/>
             
-            <AllPostWrapper>{displayAllPosts()}</AllPostWrapper>
+            <AllPostWrapper>{displayPosts(allPosts)}</AllPostWrapper>
         </>
     )
 };
