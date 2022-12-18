@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import './App.css';
 
 import SignIn from './containers/SignIn';
 import Market from './containers/Market';
@@ -12,7 +11,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     width: 500px;
     margin: auto;
 `;
@@ -21,8 +20,8 @@ const App = () => {
     const { myName, signedIn } = useMarket();
 
     return ( <>
-        <Wrapper>
-            <Title />
+        <Title />
+        <Wrapper>    
             { signedIn? <Market /> : <SignIn myName={myName} /> }
         </Wrapper>    
     </>)

@@ -16,7 +16,7 @@ const PostWrapper = styled.div`
     border-radius: 4px;
     box-shadow: 2px 2px 4px 4px #ccc;
 
-    margin: 5px 0 5px 25px;
+    margin: 10px 0 8px 20px;
 
     display: flex;
     justify-content: space-around;
@@ -24,8 +24,43 @@ const PostWrapper = styled.div`
 `;
 
 const DescriptionWrapper = styled.div`
+    height: 95%;
+    width: 30%;
+    
+    padding-left: 10px;
+
     display: flex;
     flex-direction: column;
+    justify-content: center;
+`;
+
+const PostTitle = styled.h3`
+    
+`;
+
+const PostSeller = styled.h4`
+    
+`;
+
+const PostContent = styled.p`
+    
+`;
+
+const PostPrice = styled.p`
+    
+`;
+
+const ItemBidWrapper = styled.div`
+    height: 95%;
+    width: 70%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+const StyledButton = styled(Button)`
+    width: 100px;
 `;
 
 const BidPriceWrapper = styled.div`
@@ -69,20 +104,22 @@ const Post = ({ seller, title, content, price, img }) => {
     return (
         <PostWrapper>
             <DescriptionWrapper>
-                <h3>{`Title: ${title}`}</h3>
-                <h4>{`Seller: ${seller}`}</h4>
-                <p>{`Content: ${content}`}</p>
-                <p>{`Recommended price: ${price}`}</p>
+                <PostTitle>{`Title: ${title}`}</PostTitle>
+                <PostSeller>{`Seller: ${seller}`}</PostSeller>
+                <PostContent>{`Content: ${content}`}</PostContent>
+                <PostPrice>{`Price: ${price}`}</PostPrice>
             </DescriptionWrapper>
-            <Item img={img} />
-            <Button 
-                type="primary" 
-                size={'large'}
-                onClick={handleBid} >Bid
-            </Button>
-            
-            {displayBidPrices()}
-            
+            <ItemBidWrapper>
+                <Item img={img} />
+                <StyledButton 
+                    type="primary" 
+                    size={'large'}
+                    onClick={handleBid} >Bid
+                </StyledButton>
+                
+                {displayBidPrices()}
+            </ItemBidWrapper>
+
             <BidModal 
                 open={bidModalOpen}
                 onCreate={  (bPrice) => { 

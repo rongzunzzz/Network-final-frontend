@@ -16,8 +16,8 @@ const Wrapper = styled.div`
     border-radius: 8px;
 
     position: absolute;
-    right: 20px;
-    top: 60px;
+    right: 2%;
+    top: 10%;
 
     display: flex;
     flex-direction: column;
@@ -43,22 +43,12 @@ const StyledButton = styled(Button)`
     left: 75px;
 `;
 
-const Profile = ({ myName }) => {
+const Profile = ({ myName, displayPosts }) => {
 
     const [myPosts, setMyPosts] = useState([]);
     const [myPostModalOpen, setMyPostModalOpen] = useState(false);
 
     const { allPosts } = useMarket(); // 僅用來測試 view my post
-    const displayMyPosts = () => { 
-        return allPosts.map((post, index) => { // 應是 myPosts，如果看到 allPosts 表示在測試
-            return <Post key={index} 
-                         seller={myName}
-                         title={post.postTitle} 
-                         content={post.postContent} 
-                         price={post.recommendedPrice}
-                         img={post.postImg} />  
-        })
-    }
 
     const handleViewMyPosts =  () => {
         console.log("view my post")
@@ -94,7 +84,7 @@ const Profile = ({ myName }) => {
                 onCancel={() => {
                     setMyPostModalOpen(false);
                 }}
-                displayMyPosts={displayMyPosts} >
+                displayMyPosts={displayPosts(allPosts)} >  {/* 應是 myPosts，如果看到 allPosts 表示在測試 */}
             </MyPostModal>
         </Wrapper>
     );

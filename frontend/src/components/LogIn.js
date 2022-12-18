@@ -2,7 +2,7 @@ import { Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 
-const LogIn = ({ myName, setMyName, onLogin }) => { //{me, setName, onLogin}
+const LogIn = ({ myName, setMyName, onLogin }) => { 
     return (
     <Input.Search
         size="large"

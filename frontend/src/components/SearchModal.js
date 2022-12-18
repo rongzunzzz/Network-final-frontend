@@ -9,7 +9,7 @@ const MyPostsWrapper = styled.div`
     width: ${MODAL_WIDTH * 0.95}px;
     overflow: auto;
     background-color: #c5cbd4;
-    border-radius: 10px;
+    border-radius: 8px;
 `;
 
 const SearchModal = ({ open, onOk, onCancel, displaySearchResult }) => {

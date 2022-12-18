@@ -11,10 +11,10 @@ import { useState, useEffect } from 'react';
 import { useMarket } from './hooks/useMarket';
 
 const AllPostWrapper = styled.div` 
-    height: 600px;
+    height: 650px;
     width: 800px;
     overflow: auto;
-    border: solid black 1px;
+    border: solid #e9f1f5 1px;
     border-radius: 6px;
 
     margin-top: 30px;
@@ -127,7 +127,7 @@ const Market = () => {
                 }} >
             </AddPostModal>
             
-            <Profile myName={myName}/>
+            <Profile myName={myName} displayPosts={displayPosts} />
             
             <AllPostWrapper>{displayPosts(allPosts)}</AllPostWrapper>
         </>
