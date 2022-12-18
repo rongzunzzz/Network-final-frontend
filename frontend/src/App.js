@@ -17,16 +17,13 @@ const Wrapper = styled.div`
     margin: auto;
 `;
 
-const signIn = true;
-// const signIn = false;
-
 const App = () => {
-    const { signedIn } = useMarket();
+    const { myName, signedIn } = useMarket();
 
     return ( <>
         <Wrapper>
             <Title />
-            { signIn? <Market /> : <SignIn /> }
+            { signedIn? <Market /> : <SignIn myName={myName} /> }
         </Wrapper>    
     </>)
 };

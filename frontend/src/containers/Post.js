@@ -36,12 +36,6 @@ const BidPriceWrapper = styled.div`
     border-radius: 4px;
 
     text-align: center;
-
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: space-around;
-    // align-items: center;
-    // flex-wrap: wrap;
 `;
 
 const Post = ({ seller, title, content, price, img }) => {
@@ -62,9 +56,10 @@ const Post = ({ seller, title, content, price, img }) => {
                     <></>
                 ) : (
                     <BidPriceWrapper> 
-                    { e.bidPrices.map( (p, index) => ( 
-                        <p key={index}>{`Bid ${index+1}: ${p}`}</p> 
-                    ) ) }
+                    { e.bidPrices.map( (b, index) => { 
+                        const { whoBids, bPrice } = b
+                        return <p key={index}>{`${whoBids}: ${bPrice}`}</p> 
+                    }) }
                     </BidPriceWrapper>
                 ) 
             ) : (<></>)
@@ -92,16 +87,14 @@ const Post = ({ seller, title, content, price, img }) => {
                 open={bidModalOpen}
                 onCreate={  (bPrice) => { 
                     // const {
-                    //     data: {  }
+                    //     data: { message }
                     // } = await axios.post('/bid', { 
-                    //     title,
-                    //     content,
-                    //     price, // recommended sold price
-                    //     img, // file url
-                    //     bPrice, // add this bid price to the bidPrices[] of this <Post>
+                    //     title, // because we filter posts by checking the title 
+                    //     myName, // 這邊要傳 出價者名字（應該是myName）                    
+                    //     bPrice, // add above name and this bid price to the bidPrices[] of this <Post>
                     // })
 
-                    addBidPrices(title, content, price, img, bPrice)
+                    addBidPrices(title, content, price, img, bPrice, myName)
                     setBidModalOpen(false);
                 }}
                 onCancel={() => {

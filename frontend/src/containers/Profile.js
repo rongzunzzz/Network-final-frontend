@@ -64,7 +64,7 @@ const Profile = ({ myName }) => {
         console.log("view my post")
 
         // const {
-        //     data: { posts } // an array of { seller, title, content, price, img } 這些會組成一個一個的 <Post> 
+        //     data: { posts } // an array of { seller, title, content, price, img, bidPrices[] } 這些會組成一個一個的 <Post> 
         // } = await axios.get('/myposts', {
         //     myName, // 依據 "myName" 這個 string(目前不是id)，去後端把我的 post 打包成一個陣列 posts[] 傳回來
         // })

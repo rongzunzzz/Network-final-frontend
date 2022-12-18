@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+const LOCALSTORAGE_KEY = "save-me";
+const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
+
 const MarketContext = createContext({
     myName: "",
     signedIn: false,
@@ -19,11 +22,11 @@ const makePost = (name, title, content, price, img) => ({
     postContent: content, 
     recommendedPrice: price,
     postImg: img, 
-    bidPrices: [],
+    bidPrices: [], // { whoBids: name, bPrice: price }
 })
 
 const MarketProvider = (props) => {
-    const [myName, setMyName] = useState("MyName") // current user name
+    const [myName, setMyName] = useState(savedMe || ""); // current user name
     const [signedIn, setSignedIn] = useState(false);
     const [allPosts, setAllPosts] = useState([]); // { seller, title, content, img, bidPrices[] }
 
@@ -31,10 +34,11 @@ const MarketProvider = (props) => {
         setAllPosts([...allPosts, makePost(name, title, content, price, img)])
     }
 
-    const addBidPrices = (title, content, rPrice, img, bPrice) => { // we give unique titles for post!
+    const addBidPrices = (title, content, rPrice, img, bPrice, whoBids) => { // we give unique titles for post!
         const newAllPosts = allPosts.map((e) => {
             if (e.postTitle === title) { 
-                const newBidPrice = [...e.bidPrices, bPrice]
+                const theBid = { whoBids: whoBids, bPrice: bPrice }
+                const newBidPrice = [...e.bidPrices, theBid]
                 
                 return { 
                     postTitle: title, 
@@ -48,6 +52,12 @@ const MarketProvider = (props) => {
         })
         setAllPosts(newAllPosts)
     }
+
+    useEffect(() => {
+        if (signedIn) {
+            localStorage.setItem(LOCALSTORAGE_KEY, myName);
+        }
+    }, [signedIn])
 
     return (
         <MarketContext.Provider

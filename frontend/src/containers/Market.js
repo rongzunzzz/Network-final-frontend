@@ -44,7 +44,7 @@ const Market = () => {
         console.log(`Search for: ${value}`);
 
         // const {
-        //     data: { posts } // an array of { seller, title, content, price, img } 
+        //     data: { posts } // an array of { seller, title, content, price, img, bidPrices[] } 
         // } = await axios.get('/search', {
         //     value, // 依據 title 這個 string(目前不是id)，去後端把 search 的 post 打包成一個陣列 posts[] 傳回來
         // })
@@ -60,7 +60,7 @@ const Market = () => {
 
     const displayPosts =  (displayedPosts) => {
         // const {
-        //     data: { posts } // an array of { seller, title, content, img, bidPrices[] }
+        //     data: { posts } // an array of { seller, title, content, price, img, bidPrices[] }
         // } = await axios.get('/allposts', {
 
         // })
@@ -111,7 +111,7 @@ const Market = () => {
                 onCreate={  (title, content, price, img) => { 
                     // 這裡只單純存進 DB，在新增的當下只依靠前端 render 試試看，希望不要出事
                     // const { 
-                    //     data: {  } // 或許可以是一個新增成功的彈出訊息
+                    //     data: { message } // 或許可以是一個新增成功的彈出訊息
                     // } = await axios.post('/post', { 
                     //     myName, // name of who posts the post
                     //     title,
