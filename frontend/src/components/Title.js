@@ -1,4 +1,8 @@
 import styled from 'styled-components'
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar } from 'antd';
+
+import { useState } from 'react';
 
 const Wrapper = styled.div`
     height: 10%;
@@ -8,7 +12,7 @@ const Wrapper = styled.div`
     margin-bottom: 50px;
 
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     
     h1 {
@@ -21,12 +25,41 @@ const TitleTextBlock = styled.div`
     margin-left: 3%;
 `;
 
-const Title = () => ( 
-    <Wrapper>
+const StyledPhoto = styled.div`
+    background-color: #ebf0f2;
+    border-radius: 50%;
+    margin-right: 2%;
+    cursor: pointer;
+`;
+
+const Title = ({ signedIn, setMyProfileOpen }) => {
+    
+    // const [myProfileOpen, setMyProfileOpen] = useState(false);
+    
+    const handleClick = () => {
+        setMyProfileOpen(curr => !curr);
+    }
+
+    return <Wrapper>
         <TitleTextBlock>
             <h2 style={{color: '#7f8a8f'}}>NTU E-AUCTION</h2>
         </TitleTextBlock>
+        {
+            signedIn ? 
+            <StyledPhoto onClick={handleClick}>
+                <Avatar shape="circle" size={50} icon={<UserOutlined />} />
+                {/* <Profile 
+                    open={myProfileOpen}
+                    onOk={() => {
+                        setMyProfileOpen(false);
+                    }}
+                    onCancel={() => {
+                        setMyProfileOpen(false);
+                    }} /> */}
+            </StyledPhoto> : <></>
+        }
+        
     </Wrapper> 
-);
+};
 
 export default Title;

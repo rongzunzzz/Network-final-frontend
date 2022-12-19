@@ -24,15 +24,6 @@ const SearchModal = ({ open, onOk, onCancel, displaySearchResult }) => {
     >
         <MyPostsWrapper>
             {displaySearchResult}
-            <p>Search result...</p>
-            <p>Search result...</p>
-            <p>Search result...</p>
-            <p>Search result...</p>
-            <p>Search result...</p>
-            <p>Search result...</p>
-            <p>Search result...</p>
-            <p>Search result...</p>
-            <p>Search result...</p>
         </MyPostsWrapper>
         
     </Modal>

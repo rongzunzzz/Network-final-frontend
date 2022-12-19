@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, Modal } from 'antd';
 
 import Post from './Post';
 import MyPostModal from '../components/MyPostModal';
@@ -10,8 +10,8 @@ import { useState } from 'react';
 import { useMarket } from './hooks/useMarket';
 
 const Wrapper = styled.div`
-    height: 250px;
-    width: 300px;
+    height: 35%;
+    width: 20%;
     background-color: #ebf0f2;
     border-radius: 8px;
 
@@ -66,6 +66,7 @@ const Profile = ({ myName, displayPosts }) => {
     }
 
     return (
+        
         <Wrapper>
             <StyledPhoto shape="square" 
                          size={80}

@@ -33,7 +33,7 @@ const StyledSearchBar = styled(Search)`
     margin-right: 50px;
 `;
 
-const Market = () => {
+const Market = ({ myProfileOpen }) => {
     const { myName, allPosts, setAllPosts, addMarketPosts } = useMarket();
 
     const [addPostModalOpen, setAddPostModalOpen] = useState(false);
@@ -98,7 +98,7 @@ const Market = () => {
                     onCancel={() => {
                         setSearchModalOpen(false);
                     }}
-                    displaySearchResult={displayPosts(allPosts)} > {/*應是 myPosts，如果看到 allPosts 表示在測試*/}
+                    displaySearchResult={displayPosts(allPosts)} > {/*應是 searchResult allPosts 表示在測試*/}
                 </SearchModal>
                 <Button // 要有 { title, content, item[] }
                     type="primary" 
@@ -127,7 +127,10 @@ const Market = () => {
                 }} >
             </AddPostModal>
             
-            <Profile myName={myName} displayPosts={displayPosts} />
+            {
+                myProfileOpen ? 
+                    <Profile myName={myName} displayPosts={displayPosts} /> : <></>
+            }
             
             <AllPostWrapper>{displayPosts(allPosts)}</AllPostWrapper>
         </>

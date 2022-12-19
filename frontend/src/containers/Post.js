@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { UserOutlined } from "@ant-design/icons";
-import { Button, Avatar } from "antd";
+import { UserOutlined, DollarOutlined, DollarCircleTwoTone } from "@ant-design/icons";
+import { Button, Space } from "antd";
 
 import Item from "../components/Item";
 import BidModal from "../components/BidModal";
@@ -42,19 +42,20 @@ const PostTitle = styled.div`
     word-break: normal;
     word-wrap: break-word;
 
-    margin-bottom: 7px;
-
     flex: 1;
 `;
 
-const StyledPhoto = styled(Avatar)`
-    position: absolute;
-    top: 10px;
-    left: 10px;
+const PostSeller = styled.div`
+    font-size: 20px;
+    margin-bottom: 8px;
+    flex: 2;
+
+    cursor: pointer;
 `;
 
-const PostSeller = styled.div`
-    flex: 3;
+const PostPrice = styled.div`
+    font-size: 16px;
+    flex: 1;
 `;
 
 const PostContent = styled.div`
@@ -71,11 +72,6 @@ const PostContent = styled.div`
     flex: 6;
 `;
 
-const PostPrice = styled.div`
-    margin-bottom: 5px;
-    flex: 1;
-`;
-
 const ItemBidWrapper = styled.div`
     height: 95%;
     width: 70%;
@@ -86,8 +82,11 @@ const ItemBidWrapper = styled.div`
     align-items: center;
 `;
 
-const StyledButton = styled(Button)`
-    width: 80px;
+const StyledBidButton = styled(Button)`
+    heigth: 40px;
+    width: 60px;
+    
+    margin-left: 60%;
 `;
 
 const BidPriceWrapper = styled.div`
@@ -133,21 +132,22 @@ const Post = ({ seller, title, content, price, img }) => {
             <DescriptionWrapper>
                 <PostTitle>{`${title}`}</PostTitle>
                 <PostSeller>
-                    <Avatar shape="square" 
-                         size={20}
-                         icon={<UserOutlined />} />
-                    {` ${seller}`}
+                    <Space><UserOutlined style={{color: "#4c9fcf", fontSize: '18px'}} /></Space>{` ${seller}`}
                 </PostSeller>
-                <PostPrice>{`Price: ${price}`}</PostPrice>
+                <PostPrice>
+                    <Space><DollarCircleTwoTone twoToneColor="#f0ce11" 
+                                                style={{ fontSize: '16px'}} /></Space>{` ${price}`}
+                    <StyledBidButton 
+                        type="primary" 
+                        size={'middle'}
+                        onClick={handleBid} >Bid
+                    </StyledBidButton>
+                </PostPrice>
                 <PostContent>{`${content}`}</PostContent>
             </DescriptionWrapper>
             <ItemBidWrapper>
                 <Item img={img} />
-                <StyledButton 
-                    type="primary" 
-                    size={'large'}
-                    onClick={handleBid} >Bid
-                </StyledButton>
+                
 
                 {displayBidPrices()}
             </ItemBidWrapper>
