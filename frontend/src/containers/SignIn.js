@@ -1,4 +1,5 @@
 import LogIn from "../components/LogIn";
+import axios from '../api';
 
 import { useMarket } from "./hooks/useMarket";
 
@@ -8,6 +9,7 @@ const SignIn = ({ myName }) => {
 
     const handleLogin = (name) => {
         if (name) {
+            axios.get('/').then((data) => console.log(data))
             setSignedIn(true);
         }
     }

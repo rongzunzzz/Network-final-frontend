@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Button } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { Button, Avatar } from "antd";
 
 import Item from "../components/Item";
 import BidModal from "../components/BidModal";
@@ -29,6 +30,7 @@ const DescriptionWrapper = styled.div`
     
     padding-left: 10px;
 
+    flex: 3;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,28 +39,40 @@ const DescriptionWrapper = styled.div`
 const PostTitle = styled.div`
     font-size: 24px;
     font-weight: bold;
+    word-break: normal;
+    word-wrap: break-word;
 
     margin-bottom: 7px;
 
     flex: 1;
 `;
 
+const StyledPhoto = styled(Avatar)`
+    position: absolute;
+    top: 10px;
+    left: 10px;
+`;
+
 const PostSeller = styled.div`
-    flex: 2;
+    flex: 3;
 `;
 
 const PostContent = styled.div`
-    background-color: white;
+    width: 300px;
+    background-color: #d1dade;
+    border-radius: 5px;
     word-break: normal;
     word-wrap: break-word;
     overflow: auto;
 
+    padding: 5px;
     margin-bottom: 5px;
 
-    flex: 3;
+    flex: 6;
 `;
 
 const PostPrice = styled.div`
+    margin-bottom: 5px;
     flex: 1;
 `;
 
@@ -66,20 +80,21 @@ const ItemBidWrapper = styled.div`
     height: 95%;
     width: 70%;
 
+    flex: 4;
     display: flex;
     justify-content: space-around;
     align-items: center;
 `;
 
 const StyledButton = styled(Button)`
-    width: 100px;
+    width: 80px;
 `;
 
 const BidPriceWrapper = styled.div`
     height: 150px;
     width: 120px;
     overflow: auto;
-    background-color: #c5cbd4;
+    background-color: #d1dade;
     border-radius: 4px;
 
     text-align: center;
@@ -117,9 +132,14 @@ const Post = ({ seller, title, content, price, img }) => {
         <PostWrapper>
             <DescriptionWrapper>
                 <PostTitle>{`${title}`}</PostTitle>
-                <PostSeller>{`${seller}`}</PostSeller>
-                <PostContent>{`Content: ${content}`}</PostContent>
+                <PostSeller>
+                    <Avatar shape="square" 
+                         size={20}
+                         icon={<UserOutlined />} />
+                    {` ${seller}`}
+                </PostSeller>
                 <PostPrice>{`Price: ${price}`}</PostPrice>
+                <PostContent>{`${content}`}</PostContent>
             </DescriptionWrapper>
             <ItemBidWrapper>
                 <Item img={img} />
@@ -128,7 +148,7 @@ const Post = ({ seller, title, content, price, img }) => {
                     size={'large'}
                     onClick={handleBid} >Bid
                 </StyledButton>
-                
+
                 {displayBidPrices()}
             </ItemBidWrapper>
 

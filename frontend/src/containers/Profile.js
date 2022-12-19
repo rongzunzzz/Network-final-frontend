@@ -12,7 +12,7 @@ import { useMarket } from './hooks/useMarket';
 const Wrapper = styled.div`
     height: 250px;
     width: 300px;
-    background-color: #c5cbd4;
+    background-color: #ebf0f2;
     border-radius: 8px;
 
     position: absolute;

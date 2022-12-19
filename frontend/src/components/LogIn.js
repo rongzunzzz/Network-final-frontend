@@ -6,7 +6,7 @@ const LogIn = ({ myName, setMyName, onLogin }) => {
     return (
     <Input.Search
         size="large"
-        style={{ width: 300, margin: 50 }}
+        style={{ width: 300, margin: 50, marginTop: 300 }}
         prefix={<UserOutlined />}
         placeholder="Enter your name"
         value={myName} 
