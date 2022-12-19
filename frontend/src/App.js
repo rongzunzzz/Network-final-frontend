@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import SignIn from './containers/SignIn';
 import Market from './containers/Market';
+import axios from './api';
 
 import { useMarket } from './containers/hooks/useMarket';
 import Title from './components/Title';
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
 `;
 
 const App = () => {
+    axios.get('/').then((data) => console.log(data))
     const { myName, signedIn } = useMarket();
 
     return ( <>

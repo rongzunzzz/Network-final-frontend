@@ -34,20 +34,32 @@ const DescriptionWrapper = styled.div`
     justify-content: center;
 `;
 
-const PostTitle = styled.h3`
-    
+const PostTitle = styled.div`
+    font-size: 24px;
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
+    flex: 1;
 `;
 
-const PostSeller = styled.h4`
-    
+const PostSeller = styled.div`
+    flex: 2;
 `;
 
-const PostContent = styled.p`
-    
+const PostContent = styled.div`
+    background-color: white;
+    word-break: normal;
+    word-wrap: break-word;
+    overflow: auto;
+
+    margin-bottom: 5px;
+
+    flex: 3;
 `;
 
-const PostPrice = styled.p`
-    
+const PostPrice = styled.div`
+    flex: 1;
 `;
 
 const ItemBidWrapper = styled.div`
@@ -104,8 +116,8 @@ const Post = ({ seller, title, content, price, img }) => {
     return (
         <PostWrapper>
             <DescriptionWrapper>
-                <PostTitle>{`Title: ${title}`}</PostTitle>
-                <PostSeller>{`Seller: ${seller}`}</PostSeller>
+                <PostTitle>{`${title}`}</PostTitle>
+                <PostSeller>{`${seller}`}</PostSeller>
                 <PostContent>{`Content: ${content}`}</PostContent>
                 <PostPrice>{`Price: ${price}`}</PostPrice>
             </DescriptionWrapper>

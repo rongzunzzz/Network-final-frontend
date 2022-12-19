@@ -14,7 +14,7 @@ const AllPostWrapper = styled.div`
     height: 650px;
     width: 800px;
     overflow: auto;
-    border: solid #e9f1f5 1px;
+    border: solid #d1dade 1px;
     border-radius: 6px;
 
     margin-top: 30px;
