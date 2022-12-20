@@ -57,7 +57,7 @@ const PostSeller = styled.div`
 const PostPrice = styled.div`
     font-size: 16px;
     flex: 1;
-    display: flex;
+    // display: flex;
 `;
 
 const PostContent = styled.div`

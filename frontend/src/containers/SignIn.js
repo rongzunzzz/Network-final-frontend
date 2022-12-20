@@ -1,7 +1,16 @@
+import styled from "styled-components";
+
 import LogIn from "../components/LogIn";
 import axios from '../api';
 
 import { useMarket } from "./hooks/useMarket";
+
+const Logo = styled.img`
+    height: 50%;
+    width: 60%;
+    border-radius: 3%;
+    margin-top: 200px;
+`;
 
 const SignIn = ({ myName }) => {
 
@@ -15,7 +24,10 @@ const SignIn = ({ myName }) => {
     }
 
     return (
-        <LogIn myName={myName} setMyName={setMyName} onLogin={handleLogin} />
+        <>
+            <Logo src={require('../img/logo.jpg')}  />
+            <LogIn myName={myName} setMyName={setMyName} onLogin={handleLogin} />
+        </>
     )
 };
 
