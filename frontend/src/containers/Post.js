@@ -119,9 +119,10 @@ const Post = ({ seller, title, content, price, img }) => {
     }
 
     const handleViewBid = async () => {
+        console.log("view bid")
         const {
             data: { bids }
-        } = await axios.get('/viewBid', {
+        } = await axios.get(`/bids/${title}}`, {
             title, 
         })
         setViewBids(bids);
@@ -186,15 +187,17 @@ const Post = ({ seller, title, content, price, img }) => {
             </ItemBidWrapper>
 
             <BidModal
+                bidderName={myName}
                 open={bidModalOpen}
-                onCreate={(bPrice) => {
-                    // const {
-                    //     data: { message }
-                    // } = await axios.post('/bid', { 
-                    //     title, // because we filter posts by checking the title 
-                    //     myName, // 這邊要傳 出價者名字（應該是myName）                    
-                    //     bPrice, // add above name and this bid price to the bidPrices[] of this <Post>
-                    // })
+                onCreate={ async (myName, bPrice) => { // bPrice是剛輸入的數字
+                    const {
+                        data: { message }
+                    } = await axios.post('/bids/title', { 
+                        title, // because we filter posts by checking the title 
+                        myName, // 這邊要傳 出價者名字（應該是myName）                    
+                        price, // add above name and this bid price to the bidPrices[] of this <Post>
+                    })
+                    console.log(message)
 
                     addBidPrices(title, content, price, img, bPrice, myName)
                     setBidModalOpen(false);
@@ -205,14 +208,7 @@ const Post = ({ seller, title, content, price, img }) => {
             </BidModal>
             <ShowBidModal
                 open={viewBidModalOpen}
-                onOk={(bPrice) => {
-                    // const {
-                    //     data: { message }
-                    // } = await axios.post('/bid', { 
-                    //     title, // because we filter posts by checking the title 
-                    //     myName, // 這邊要傳 出價者名字（應該是myName）                    
-                    //     bPrice, // add above name and this bid price to the bidPrices[] of this <Post>
-                    // })
+                onOk={() => {
                     setViewBidModalOpen(false);
                 }}
                 onCancel={() => {

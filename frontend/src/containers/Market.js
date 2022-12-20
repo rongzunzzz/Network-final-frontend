@@ -40,15 +40,18 @@ const Market = ({ myProfileOpen }) => {
     const [searchModalOpen, setSearchModalOpen] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
 
-    const handleSearch = (value) => {
-        console.log(`Search for: ${value}`);
+    const handleSearch = async(title) => {
+        console.log(`Search for: ${title}`);
 
-        // const {
-        //     data: { posts } // an array of { seller, title, content, price, img, bidPrices[] } 
-        // } = await axios.get('/search', {
-        //     value, // 依據 title 這個 string(目前不是id)，去後端把 search 的 post 打包成一個陣列 posts[] 傳回來
-        // })
-        // setSearchResult(posts);
+        const {
+            data: { posts } // an array of { seller, title, content, price, img, bidPrices[] } 
+        } = await axios.get(`/posts/search/${title}`, {
+            title, // 依據 title 這個 string(目前不是id)，去後端把 search 的 post 打包成一個陣列 posts[] 傳回來
+        })
+
+        console.log(posts)
+
+        setSearchResult(posts);
 
         setSearchModalOpen(true);
     }
@@ -58,15 +61,15 @@ const Market = ({ myProfileOpen }) => {
         setAddPostModalOpen(true);
     }
 
-    // const getAllPosts = async () => {
-    //     const {
-    //         data: { posts } // an array of { seller, title, content, price, img, bidPrices[] }
-    //     } = await axios.get('/posts/', {
+    const getAllPosts = async () => {
+        const {
+            data: { posts } // an array of { seller, title, content, price, img, bidPrices[] }
+        } = await axios.get('/posts/', {
 
-    //     })
+        })
 
-    //     setAllPosts(posts);
-    // }
+        setAllPosts(posts);
+    }
 
     const displayPosts = (displayedPosts) => {
         return displayedPosts.map((post, index) => {
@@ -80,8 +83,8 @@ const Market = ({ myProfileOpen }) => {
     }
 
     useEffect(() => {
-        // setTimeout(getAllPosts, '1500'); // 登入之後會要1.5秒後才顯示出來，之後進入無限query（1.5秒一次，很可怕，但總比沒設定好）
-        displayPosts(allPosts);
+        setTimeout(getAllPosts, '2000'); // 登入之後會要1.5秒後才顯示出來，之後進入無限query（1.5秒一次，很可怕，但總比沒設定好）
+        // displayPosts(allPosts);
     }, [allPosts])
 
     return (
@@ -111,19 +114,20 @@ const Market = ({ myProfileOpen }) => {
                 </Button>
             </FunctionBarWrapper>
             <AddPostModal
+                sellerName={myName}
                 open={addPostModalOpen}
-                onCreate={async (title, content, price, img) => {
+                onCreate={async (myName, title, content, price, img) => {
                     // 這裡只單純存進 DB，在新增的當下只依靠前端 render 試試看，希望不要出事
-                    // const {
-                    //     data: { message } // 或許可以是一個新增成功的彈出訊息
-                    // } = await axios.post('/posts/post', {
-                    //     seller, // name of who posts the post
-                    //     title,
-                    //     content,
-                    //     price, // recommended sold price
-                    //     img, // file url
-                    // })
-                    // console.log(message)
+                    const {
+                        data: { message } // 或許可以是一個新增成功的彈出訊息
+                    } = await axios.post('/posts/post', {
+                        myName, // name of who posts the post
+                        title,
+                        content,
+                        price, // recommended sold price
+                        img, // file url
+                    })
+                    console.log(message)
                     addMarketPosts(myName, title, content, price, img);
                     setAddPostModalOpen(false);
                 }}

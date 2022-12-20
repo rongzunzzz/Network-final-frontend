@@ -3,7 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { useState } from "react";
 
-const AddPostModal = ({ open, onCreate, onCancel }) => {
+const AddPostModal = ({ sellerName, open, onCreate, onCancel }) => {
     const [form] = Form.useForm();
     const [fileUrl, setFileUrl] = useState('')
 
@@ -27,8 +27,9 @@ const AddPostModal = ({ open, onCreate, onCancel }) => {
                         // console.log(values)
                         // console.log(fileUrl)
                         
+                        console.log(`AddPostModal: ${sellerName}`)
                         const { postTitle, postContent, recommendedPrice } = values;
-                        onCreate(postTitle, postContent, recommendedPrice, fileUrl);
+                        onCreate(sellerName, postTitle, postContent, recommendedPrice, fileUrl);
 
                     }).catch((e) => {
                         window.alert(e);

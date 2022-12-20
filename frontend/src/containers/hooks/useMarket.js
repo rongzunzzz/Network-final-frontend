@@ -31,13 +31,20 @@ const MarketProvider = (props) => {
     const [allPosts, setAllPosts] = useState([]); // { seller, title, content, price, img, bidPrices[] }
 
     const addMarketPosts = (name, title, content, price, img) => {
-        setAllPosts([...allPosts, makePost(name, title, content, price, img)])
+        const newPost = makePost(name, title, content, price, img)
+        console.log("========newpost========")
+        console.log(newPost)
+        setAllPosts([...allPosts, newPost])
     }
 
     const addBidPrices = (title, content, rPrice, img, bPrice, whoBids) => { // we give unique titles for post!
         const newAllPosts = allPosts.map((e) => {
+            console.log(e)
             if (e.postTitle === title) {
                 const theBid = { whoBids: whoBids, bPrice: bPrice }
+                console.log(`bid for ${title}`)
+                console.log(theBid)
+                console.log(typeof(e.bidPrices)) // undefined?
                 const newBidPrice = [...e.bidPrices, theBid]
 
                 return {

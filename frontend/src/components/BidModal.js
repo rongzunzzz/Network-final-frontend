@@ -1,6 +1,6 @@
 import { Modal, Form, Input } from "antd";
 
-const BidModal = ({ open, onCreate, onCancel }) => {
+const BidModal = ({ bidderName, open, onCreate, onCancel }) => {
     const [form] = Form.useForm();
 
     return (
@@ -17,7 +17,7 @@ const BidModal = ({ open, onCreate, onCancel }) => {
                         // console.log(values)
                         
                         const { bidPrice } = values;
-                        onCreate(bidPrice);
+                        onCreate(bidderName, bidPrice);
 
                     }).catch((e) => {
                         window.alert(e);

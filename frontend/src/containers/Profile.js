@@ -53,15 +53,15 @@ const Profile = ({ myName, displayPosts }) => {
     const handleViewMyPosts = async () => {
         console.log(`view ${myName}'s post`)
 
-        // const {
-        //     data: { posts } // an array of { seller, title, content, price, img, bidPrices[] } 這些會組成一個一個的 <Post> 
-        // } = await axios.get(`/posts/:${myName}`, {
-        //     myName // 依據 "myName" 這個 string(目前不是id)，去後端把我的 post 打包成一個陣列 posts[] 傳回來
-        // })
+        const {
+            data: { posts } // an array of { seller, title, content, price, img, bidPrices[] } 這些會組成一個一個的 <Post> 
+        } = await axios.get(`/posts/${myName}`, {
+            myName // 依據 "myName" 這個 string(目前不是id)，去後端把我的 post 打包成一個陣列 posts[] 傳回來
+        })
 
-        // console.log(posts)
+        console.log(posts)
 
-        // setMyPosts(posts);
+        setMyPosts(posts);
 
         setMyPostModalOpen(true);
     }
@@ -86,7 +86,7 @@ const Profile = ({ myName, displayPosts }) => {
                 onCancel={() => {
                     setMyPostModalOpen(false);
                 }}
-                displayMyPosts={displayPosts(allPosts)} >  {/* 應是 myPosts，如果看到 allPosts 表示在測試 */}
+                displayMyPosts={displayPosts(myPosts)} >  {/* 應是 myPosts，如果看到 allPosts 表示在測試 */}
             </MyPostModal>
         </Wrapper>
     );
