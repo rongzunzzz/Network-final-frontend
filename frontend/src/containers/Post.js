@@ -154,7 +154,7 @@ const Post = ({ seller, title, content, price, img }) => {
     //             )
     //         ) : (<></>)
     //     })
-    // }   
+    // }
 
     return (
         <PostWrapper>
