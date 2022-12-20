@@ -112,33 +112,49 @@ const Post = ({ seller, title, content, price, img }) => {
 
     const [bidModalOpen, setBidModalOpen] = useState(false);
     const [viewBidModalOpen, setViewBidModalOpen] = useState(false);
+    const [viewBids, setViewBids] = useState([]) // [{whoBids: name, price: p}, {}, {}]
 
     const handleBid = () => {
         setBidModalOpen(true);
     }
 
-    const handleViewBid = () => {
+    const handleViewBid = async () => {
+        const {
+            data: { bids }
+        } = await axios.get('/viewBid', {
+            title, 
+        })
+        setViewBids(bids);
         setViewBidModalOpen(true);
     }
 
     const displayBidPrices = () => {
-        return allPosts.map((e) => {
-            // console.log(e)
-            return e.postTitle === title ? (
-                e.bidPrices.length === 0 ? (
-                    // <p>{`NO BIDS`}</p> 
-                    <></>
-                ) : (
-                    <BidPriceWrapper>
-                        {e.bidPrices.map((b, index) => {
-                            const { whoBids, bPrice } = b
-                            return <p key={index} style={{ fontSize: '30px' }} >{`${whoBids}: ${bPrice}`}</p>
-                        })}
-                    </BidPriceWrapper>
-                )
-            ) : (<></>)
-        })
+        return <BidPriceWrapper>
+                    {viewBids.map((b, index) => {
+                        const { whoBids, bPrice } = b
+                        return <p key={index} style={{ fontSize: '30px' }} >{`${whoBids}: ${bPrice}`}</p>
+                    })}
+                </BidPriceWrapper>
     }
+
+    // const displayBidPrices = () => {
+    //     return allPosts.map((e) => {
+    //         // console.log(e)
+    //         return e.postTitle === title ? (
+    //             e.bidPrices.length === 0 ? (
+    //                 // <p>{`NO BIDS`}</p> 
+    //                 <></>
+    //             ) : (
+    //                 <BidPriceWrapper>
+    //                     {e.bidPrices.map((b, index) => {
+    //                         const { whoBids, bPrice } = b
+    //                         return <p key={index} style={{ fontSize: '30px' }} >{`${whoBids}: ${bPrice}`}</p>
+    //                     })}
+    //                 </BidPriceWrapper>
+    //             )
+    //         ) : (<></>)
+    //     })
+    // }
 
     return (
         <PostWrapper>
