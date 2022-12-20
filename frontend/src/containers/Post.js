@@ -4,6 +4,7 @@ import { Button, Space } from "antd";
 
 import Item from "../components/Item";
 import BidModal from "../components/BidModal";
+import ShowBidModal from "../components/ShowBidModal";
 import axios from "../api";
 
 import { useState } from "react";
@@ -56,6 +57,7 @@ const PostSeller = styled.div`
 const PostPrice = styled.div`
     font-size: 16px;
     flex: 1;
+    display: flex;
 `;
 
 const PostContent = styled.div`
@@ -85,13 +87,18 @@ const ItemBidWrapper = styled.div`
 const StyledBidButton = styled(Button)`
     heigth: 40px;
     width: 60px;
-    
-    margin-left: 60%;
+    margin-left: 30%;
+`;
+
+const StyleViewBidButton = styled(Button)`
+    heigth: 40px;
+    width: 100px;
+    margin-left: 3%;
 `;
 
 const BidPriceWrapper = styled.div`
-    height: 150px;
-    width: 120px;
+    height: 95%;
+    width: 95%;
     overflow: auto;
     background-color: #d1dade;
     border-radius: 4px;
@@ -103,26 +110,32 @@ const Post = ({ seller, title, content, price, img }) => {
 
     const { myName, allPosts, addBidPrices } = useMarket();
 
-    const [bidModalOpen, setBidModalOpen] = useState(false); 
+    const [bidModalOpen, setBidModalOpen] = useState(false);
+    const [viewBidModalOpen, setViewBidModalOpen] = useState(false);
 
-    const handleBid = () => { 
+    const handleBid = () => {
         setBidModalOpen(true);
+    }
+
+    const handleViewBid = () => {
+        setViewBidModalOpen(true);
     }
 
     const displayBidPrices = () => {
         return allPosts.map((e) => {
+            // console.log(e)
             return e.postTitle === title ? (
                 e.bidPrices.length === 0 ? (
                     // <p>{`NO BIDS`}</p> 
                     <></>
                 ) : (
-                    <BidPriceWrapper> 
-                    { e.bidPrices.map( (b, index) => { 
-                        const { whoBids, bPrice } = b
-                        return <p key={index}>{`${whoBids}: ${bPrice}`}</p> 
-                    }) }
+                    <BidPriceWrapper>
+                        {e.bidPrices.map((b, index) => {
+                            const { whoBids, bPrice } = b
+                            return <p key={index} style={{ fontSize: '30px' }} >{`${whoBids}: ${bPrice}`}</p>
+                        })}
                     </BidPriceWrapper>
-                ) 
+                )
             ) : (<></>)
         })
     }
@@ -132,29 +145,33 @@ const Post = ({ seller, title, content, price, img }) => {
             <DescriptionWrapper>
                 <PostTitle>{`${title}`}</PostTitle>
                 <PostSeller>
-                    <Space><UserOutlined style={{color: "#4c9fcf", fontSize: '18px'}} /></Space>{` ${seller}`}
+                    <Space><UserOutlined style={{ color: "#4c9fcf", fontSize: '18px' }} /></Space>{` ${seller}`}
                 </PostSeller>
                 <PostPrice>
-                    <Space><DollarCircleTwoTone twoToneColor="#f0ce11" 
-                                                style={{ fontSize: '16px'}} /></Space>{` ${price}`}
-                    <StyledBidButton 
-                        type="primary" 
+                    <Space><DollarCircleTwoTone twoToneColor="#f0ce11"
+                        style={{ fontSize: '16px' }} /></Space>{` ${price}`}
+                    <StyledBidButton
+                        type="primary"
                         size={'middle'}
                         onClick={handleBid} >Bid
                     </StyledBidButton>
+                    <StyleViewBidButton
+                        type="primary"
+                        size={'middle'}
+                        onClick={handleViewBid} >View Bids
+                    </StyleViewBidButton>
                 </PostPrice>
                 <PostContent>{`${content}`}</PostContent>
             </DescriptionWrapper>
             <ItemBidWrapper>
                 <Item img={img} />
-                
 
-                {displayBidPrices()}
+                {/* {displayBidPrices()} */}
             </ItemBidWrapper>
 
-            <BidModal 
+            <BidModal
                 open={bidModalOpen}
-                onCreate={  (bPrice) => { 
+                onCreate={(bPrice) => {
                     // const {
                     //     data: { message }
                     // } = await axios.post('/bid', { 
@@ -170,6 +187,25 @@ const Post = ({ seller, title, content, price, img }) => {
                     setBidModalOpen(false);
                 }} >
             </BidModal>
+            <ShowBidModal
+                open={viewBidModalOpen}
+                onOk={(bPrice) => {
+                    // const {
+                    //     data: { message }
+                    // } = await axios.post('/bid', { 
+                    //     title, // because we filter posts by checking the title 
+                    //     myName, // 這邊要傳 出價者名字（應該是myName）                    
+                    //     bPrice, // add above name and this bid price to the bidPrices[] of this <Post>
+                    // })
+                    setViewBidModalOpen(false);
+                }}
+                onCancel={() => {
+                    setViewBidModalOpen(false);
+                }}
+                displayBidPrices={displayBidPrices()} >
+            </ShowBidModal>
+
+
         </PostWrapper>
     )
 };

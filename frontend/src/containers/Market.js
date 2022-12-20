@@ -7,7 +7,7 @@ import AddPostModal from '../components/AddPostModal';
 import SearchModal from '../components/SearchModal';
 import axios from "../api";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useMarket } from './hooks/useMarket';
 
 const AllPostWrapper = styled.div` 
@@ -40,7 +40,7 @@ const Market = ({ myProfileOpen }) => {
     const [searchModalOpen, setSearchModalOpen] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
 
-    const handleSearch =  (value) => {
+    const handleSearch = (value) => {
         console.log(`Search for: ${value}`);
 
         // const {
@@ -58,25 +58,29 @@ const Market = ({ myProfileOpen }) => {
         setAddPostModalOpen(true);
     }
 
-    const displayPosts =  (displayedPosts) => {
-        // const {
-        //     data: { posts } // an array of { seller, title, content, price, img, bidPrices[] }
-        // } = await axios.get('/allposts', {
+    // const getAllPosts = async () => {
+    //     const {
+    //         data: { posts } // an array of { seller, title, content, price, img, bidPrices[] }
+    //     } = await axios.get('/posts/', {
 
-        // })
-        // setAllPosts(posts);
+    //     })
 
-        return displayedPosts.map((post, index) => { 
-            return <Post key={index} 
-                         seller={myName}
-                         title={post.postTitle} 
-                         content={post.postContent} 
-                         price={post.recommendedPrice}
-                         img={post.postImg} />  
+    //     setAllPosts(posts);
+    // }
+
+    const displayPosts = (displayedPosts) => {
+        return displayedPosts.map((post, index) => {
+            return <Post key={index}
+                seller={post.postSeller} // myName 會回到沒改過的版本
+                title={post.postTitle}
+                content={post.postContent}
+                price={post.recommendedPrice}
+                img={post.postImg} />
         })
     }
 
     useEffect(() => {
+        // setTimeout(getAllPosts, '1500'); // 登入之後會要1.5秒後才顯示出來，之後進入無限query（1.5秒一次，很可怕，但總比沒設定好）
         displayPosts(allPosts);
     }, [allPosts])
 
@@ -98,27 +102,28 @@ const Market = ({ myProfileOpen }) => {
                     onCancel={() => {
                         setSearchModalOpen(false);
                     }}
-                    displaySearchResult={displayPosts(allPosts)} > {/*應是 searchResult allPosts 表示在測試*/}
+                    displaySearchResult={displayPosts(searchResult)} > {/*應是 searchResult allPosts 表示在測試*/}
                 </SearchModal>
                 <Button // 要有 { title, content, item[] }
-                    type="primary" 
+                    type="primary"
                     size={'large'}
                     onClick={handleAddPost} >Add Post!
                 </Button>
             </FunctionBarWrapper>
-            <AddPostModal 
+            <AddPostModal
                 open={addPostModalOpen}
-                onCreate={  (title, content, price, img) => { 
+                onCreate={async (title, content, price, img) => {
                     // 這裡只單純存進 DB，在新增的當下只依靠前端 render 試試看，希望不要出事
-                    // const { 
+                    // const {
                     //     data: { message } // 或許可以是一個新增成功的彈出訊息
-                    // } = await axios.post('/post', { 
-                    //     myName, // name of who posts the post
+                    // } = await axios.post('/posts/post', {
+                    //     seller, // name of who posts the post
                     //     title,
                     //     content,
                     //     price, // recommended sold price
                     //     img, // file url
                     // })
+                    // console.log(message)
                     addMarketPosts(myName, title, content, price, img);
                     setAddPostModalOpen(false);
                 }}
@@ -126,12 +131,12 @@ const Market = ({ myProfileOpen }) => {
                     setAddPostModalOpen(false);
                 }} >
             </AddPostModal>
-            
+
             {
-                myProfileOpen ? 
+                myProfileOpen ?
                     <Profile myName={myName} displayPosts={displayPosts} /> : <></>
             }
-            
+
             <AllPostWrapper>{displayPosts(allPosts)}</AllPostWrapper>
         </>
     )

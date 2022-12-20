@@ -20,7 +20,7 @@ const StyledImg = styled.img`
 const Item = ({ img }) => {
     return (
         <ImgWrapper>
-            <StyledImg src={img} />
+            <StyledImg src={img} alt={"NO IMG"} />
         </ImgWrapper>
     )
 };

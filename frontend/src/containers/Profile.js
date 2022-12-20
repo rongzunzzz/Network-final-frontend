@@ -50,30 +50,31 @@ const Profile = ({ myName, displayPosts }) => {
 
     const { allPosts } = useMarket(); // 僅用來測試 view my post
 
-    const handleViewMyPosts =  () => {
-        console.log("view my post")
+    const handleViewMyPosts = async () => {
+        console.log(`view ${myName}'s post`)
 
         // const {
         //     data: { posts } // an array of { seller, title, content, price, img, bidPrices[] } 這些會組成一個一個的 <Post> 
-        // } = await axios.get('/myposts', {
-        //     myName, // 依據 "myName" 這個 string(目前不是id)，去後端把我的 post 打包成一個陣列 posts[] 傳回來
+        // } = await axios.get(`/posts/:${myName}`, {
+        //     myName // 依據 "myName" 這個 string(目前不是id)，去後端把我的 post 打包成一個陣列 posts[] 傳回來
         // })
-        // setMyPosts(posts);
 
-        // displayMyPosts();
+        // console.log(posts)
+
+        // setMyPosts(posts);
 
         setMyPostModalOpen(true);
     }
 
     return (
-        
+
         <Wrapper>
-            <StyledPhoto shape="square" 
-                         size={80}
-                         icon={<UserOutlined />} />
+            <StyledPhoto shape="square"
+                size={80}
+                icon={<UserOutlined />} />
             <StyledName>{`${myName}`}</StyledName>
-            <StyledButton 
-                type="primary" 
+            <StyledButton
+                type="primary"
                 size={'large'}
                 onClick={handleViewMyPosts} >View Your Posts!
             </StyledButton>

@@ -19,13 +19,13 @@ const SearchModal = ({ open, onOk, onCancel, displaySearchResult }) => {
         open={open}
         onOk={onOk}
         onCancel={onCancel}
-        width={MODAL_WIDTH} 
-        bodyStyle={{height: MODAL_HEIGHT}}
+        width={MODAL_WIDTH}
+        bodyStyle={{ height: MODAL_HEIGHT }}
     >
         <MyPostsWrapper>
             {displaySearchResult}
         </MyPostsWrapper>
-        
+
     </Modal>
 }
 
