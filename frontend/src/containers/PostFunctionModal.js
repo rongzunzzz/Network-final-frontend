@@ -47,6 +47,8 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
     const [rateModalOpen, setRateModalOpen] = useState(false);
     const [viewRateModalOpen, setViewRateModalOpen] = useState(false);
     const [viewRates, setViewRates] = useState([]); // [{whoRates: name, rate: r}, {}, {}]
+    const [viewTrackModalOpen, setViewTrackModalOpen] = useState(false);
+    const [viewTracks, setViewTracks] = useState([]); // [name1, name2, ...]
 
     const handleBid = () => {
         setBidModalOpen(true);
@@ -94,6 +96,33 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
                 </ShowWrapper>
     }
 
+    const handleTrack = async () => {
+        const {
+            data: { message }
+        } = await axios.post('/tracks/title', {
+            myName,
+            title,
+        })
+    }
+
+    const handleViewTrack = async () => {
+        const {
+            data: { tracks }
+        } = await axios.get(`/tracks${title}`, {
+            title,
+        })
+        setViewTracks(tracks);
+        setViewTrackModalOpen(true);
+    }
+
+    const displayTracks = (tk) => {
+        return <ShowWrapper> 
+                {tk.map((t, index) => {
+                    return <p key={index} style={{ fontSize: '30px' }} >{`${t}`}</p>
+                })}
+                </ShowWrapper>
+    }
+
     return (
         <Modal 
             open={open}
@@ -121,6 +150,16 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
                 type="primary"
                 size={'middle'}
                 onClick={handleViewRate} >View Rates
+            </StyledButton>
+            <StyledButton
+                type="primary"
+                size={'middle'}
+                onClick={handleTrack} >Track this
+            </StyledButton>
+            <StyledButton
+                type="primary"
+                size={'middle'}
+                onClick={handleViewTrack} >View Tracks
             </StyledButton>
             
             <BidModal
@@ -176,6 +215,16 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
                     setViewRateModalOpen(false);
                 }}
                 displayRates={displayRates(viewRates)} >
+            </ShowRateModal>
+            <ShowRateModal
+                open={viewTrackModalOpen}
+                onOk={() => {
+                    setViewTrackModalOpen(false);
+                }}
+                onCancel={() => {
+                    setViewTrackModalOpen(false);
+                }}
+                displayRates={displayTracks(viewTracks)} >
             </ShowRateModal>
         </Modal>
     )
