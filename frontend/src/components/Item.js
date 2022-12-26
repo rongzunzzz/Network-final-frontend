@@ -4,7 +4,7 @@ const ImgWrapper = styled.div`
     height: 75%;
     width: 65%;
     background-color: #c5cbd4;
-    border-radius: 2px;
+    border-radius: 3px;
 
     display:flex;
     justify-content: center;

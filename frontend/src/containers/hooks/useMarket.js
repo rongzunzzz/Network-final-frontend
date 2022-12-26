@@ -15,7 +15,6 @@ const MarketContext = createContext({
     setAllPosts: () => { },
 
     addMarketPosts: () => { },
-    addBidPrices: () => { },
 })
 
 const makePost = (name, title, content, price, img) => ({
@@ -41,30 +40,6 @@ const MarketProvider = (props) => {
         setAllPosts([...allPosts, newPost])
     }
 
-    const addBidPrices = (title, content, rPrice, img, bPrice, whoBids) => { // we give unique titles for post!
-        console.log(allPosts)
-        const newAllPosts = allPosts.map((e) => {
-            console.log(e)
-            if (e.postTitle === title) {
-                // const theBid = { whoBids: whoBids, bPrice: bPrice }
-                console.log(`bid for ${title}`)
-                // console.log(theBid)
-                // console.log(typeof(e.bidPrices)) // undefined?
-                // const newBidPrice = [...e.bidPrices, theBid]
-
-                return {
-                    postTitle: title,
-                    postContent: content,
-                    recommendedPrice: rPrice,
-                    postImg: img,
-                    // bidPrices: newBidPrice
-                };
-            }
-            return e;
-        })
-        setAllPosts(newAllPosts)
-    }
-
     useEffect(() => {
         if (signedIn) {
             localStorage.setItem(LOCALSTORAGE_KEY, myName);
@@ -78,7 +53,6 @@ const MarketProvider = (props) => {
                 myProfile, setMyProfile,
                 signedIn, setSignedIn,
                 allPosts, setAllPosts, addMarketPosts,
-                addBidPrices,
             }}
             {...props}
         />
