@@ -27,14 +27,12 @@ const AddPostModal = ({ sellerName, open, onCreate, onCancel }) => {
                         // console.log(values)
                         // console.log(fileUrl)
                         
-                        console.log(`AddPostModal: ${sellerName}`)
                         const { postTitle, postContent, recommendedPrice } = values;
                         onCreate(sellerName, postTitle, postContent, recommendedPrice, fileUrl);
 
                     }).catch((e) => {
                         window.alert(e);
                     })
-                console.log("New post added!")
             }} >
 
             <Form form={form} layout="vertical" name="form_in_modal" >

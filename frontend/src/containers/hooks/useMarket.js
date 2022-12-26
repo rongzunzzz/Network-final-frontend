@@ -5,10 +5,12 @@ const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
 
 const MarketContext = createContext({
     myName: "",
+    myProfile: {},
     signedIn: false,
     allPosts: [],
 
     setMyName: () => { },
+    setMyProfile: () => { },
     setSignedIn: () => { },
     setAllPosts: () => { },
 
@@ -27,32 +29,35 @@ const makePost = (name, title, content, price, img) => ({
 
 const MarketProvider = (props) => {
     const [myName, setMyName] = useState(savedMe || ""); // current user name
+    const [myProfile, setMyProfile] = useState({ phoneNum: "0800092000", 
+                                                 account: "NTUIM",
+                                                 password: "0000",
+                                                 role: "normal" }); 
     const [signedIn, setSignedIn] = useState(false);
     const [allPosts, setAllPosts] = useState([]); // { seller, title, content, price, img, bidPrices[] }
 
     const addMarketPosts = (name, title, content, price, img) => {
         const newPost = makePost(name, title, content, price, img)
-        console.log("========newpost========")
-        console.log(newPost)
         setAllPosts([...allPosts, newPost])
     }
 
     const addBidPrices = (title, content, rPrice, img, bPrice, whoBids) => { // we give unique titles for post!
+        console.log(allPosts)
         const newAllPosts = allPosts.map((e) => {
             console.log(e)
             if (e.postTitle === title) {
-                const theBid = { whoBids: whoBids, bPrice: bPrice }
+                // const theBid = { whoBids: whoBids, bPrice: bPrice }
                 console.log(`bid for ${title}`)
-                console.log(theBid)
-                console.log(typeof(e.bidPrices)) // undefined?
-                const newBidPrice = [...e.bidPrices, theBid]
+                // console.log(theBid)
+                // console.log(typeof(e.bidPrices)) // undefined?
+                // const newBidPrice = [...e.bidPrices, theBid]
 
                 return {
                     postTitle: title,
                     postContent: content,
                     recommendedPrice: rPrice,
                     postImg: img,
-                    bidPrices: newBidPrice
+                    // bidPrices: newBidPrice
                 };
             }
             return e;
@@ -70,6 +75,7 @@ const MarketProvider = (props) => {
         <MarketContext.Provider
             value={{
                 myName, setMyName,
+                myProfile, setMyProfile,
                 signedIn, setSignedIn,
                 allPosts, setAllPosts, addMarketPosts,
                 addBidPrices,

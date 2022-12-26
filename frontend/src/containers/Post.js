@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import { UserOutlined, DollarOutlined, DollarCircleTwoTone } from "@ant-design/icons";
-import { Button, Space } from "antd";
+import { Button, Space, Input } from "antd";
 
 import Item from "../components/Item";
+import Comment from "../components/Comment";
 import BidModal from "../components/BidModal";
 import ShowBidModal from "../components/ShowBidModal";
 import axios from "../api";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMarket } from "./hooks/useMarket";
 
+const COMMENT_SECTION_HEIGHT = 45 // including the comments part and the input box
 const PostWrapper = styled.div`
-    height: 200px;
+    height: 600px;
     width: 95%;
     background-color: #ebf0f2;
     border: solid white 1px;
@@ -23,11 +25,13 @@ const PostWrapper = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
 `;
 
 const DescriptionWrapper = styled.div`
-    height: 95%;
+    height: ${100-COMMENT_SECTION_HEIGHT}%;
     width: 30%;
+    // background-color: blue;
     
     padding-left: 10px;
 
@@ -38,19 +42,15 @@ const DescriptionWrapper = styled.div`
 `;
 
 const PostTitle = styled.div`
-    font-size: 24px;
-    font-weight: bold;
-    word-break: normal;
-    word-wrap: break-word;
+    font-size: 24px; font-weight: bold;
+    word-break: normal; word-wrap: break-word;
 
     flex: 1;
 `;
 
 const PostSeller = styled.div`
     font-size: 20px;
-    margin-bottom: 8px;
     flex: 2;
-
     cursor: pointer;
 `;
 
@@ -61,21 +61,21 @@ const PostPrice = styled.div`
 `;
 
 const PostContent = styled.div`
-    width: 300px;
+    width: 95%;
     background-color: #d1dade;
     border-radius: 5px;
-    word-break: normal;
-    word-wrap: break-word;
+    word-break: normal; word-wrap: break-word;
     overflow: auto;
 
     padding: 5px;
     margin-bottom: 5px;
+    margin-top: 5px;
 
     flex: 6;
 `;
 
-const ItemBidWrapper = styled.div`
-    height: 95%;
+const ItemWrapper = styled.div`
+    height: ${100-COMMENT_SECTION_HEIGHT}%;
     width: 70%;
 
     flex: 4;
@@ -87,7 +87,7 @@ const ItemBidWrapper = styled.div`
 const StyledBidButton = styled(Button)`
     heigth: 40px;
     width: 60px;
-    margin-left: 30%;
+    margin-left: 25%;
 `;
 
 const StyleViewBidButton = styled(Button)`
@@ -106,13 +106,30 @@ const BidPriceWrapper = styled.div`
     text-align: center;
 `;
 
+const CommentsWrapper = styled.div`
+    height: 20%;
+    width: 90%;
+    overflow: auto;
+    // background-color: #c5cbd4;
+    border: solid #d1dade 1px;
+    border-radius: 4px;  
+    padding: 10px;
+`;
+
+const { Search } = Input;
+const StyledCommentInput = styled(Search)`
+    width: 93%;
+`;
+
 const Post = ({ seller, title, content, price, img }) => {
 
     const { myName, allPosts, addBidPrices } = useMarket();
 
     const [bidModalOpen, setBidModalOpen] = useState(false);
     const [viewBidModalOpen, setViewBidModalOpen] = useState(false);
-    const [viewBids, setViewBids] = useState([]) // [{whoBids: name, price: p}, {}, {}]
+    const [viewBids, setViewBids] = useState([]); // [{whoBids: name, price: p}, {}, {}]
+    const [comments, setComments] = useState([{sender: 'AA', content: 'aa'},
+                                              {sender: 'BB', content: 'bb'},]); // [{sender: name, content: ct}]
 
     const handleBid = () => {
         setBidModalOpen(true);
@@ -125,18 +142,44 @@ const Post = ({ seller, title, content, price, img }) => {
         } = await axios.get(`/bids/${title}}`, {
             title, 
         })
+        console.log(bids)
         setViewBids(bids);
         setViewBidModalOpen(true);
     }
 
-    const displayBidPrices = () => {
-        return <BidPriceWrapper>
-                    {viewBids.map((b, index) => {
-                        const { whoBids, bPrice } = b
-                        return <p key={index} style={{ fontSize: '30px' }} >{`${whoBids}: ${bPrice}`}</p>
-                    })}
+    const handleComment =  (content) => { // comment content, not post content
+        // const {
+        //     data: {}
+        // } = await axios.post(`/comments/${title}`, {
+        //     title, // this post
+        //     myName, // who left the comment
+        //     content,
+        // })
+        const newComment = { sender: myName, content: content }
+        setComments(...comments, newComment); // 這行應該有bug或不應該在這
+    }
+
+    const displayBidPrices = (vb) => {
+        return <BidPriceWrapper> 
+                {vb.map((b, index) => {
+                    const { whoBids, bPrice } = b
+                    console.log(b)
+                    return <p key={index} style={{ fontSize: '30px' }} >{`${whoBids}: ${bPrice}`}</p>
+                })}
                 </BidPriceWrapper>
     }
+
+    const displayComments = () => {
+        return comments.map((c, i) => {
+            return <Comment key={i}
+                            sender={c.sender}
+                            content={c.content} />
+        })
+    }
+
+    // useEffect(() => {
+    //     displayComments();
+    // }, [comments])
 
     // const displayBidPrices = () => {
     //     return allPosts.map((e) => {
@@ -180,11 +223,17 @@ const Post = ({ seller, title, content, price, img }) => {
                 </PostPrice>
                 <PostContent>{`${content}`}</PostContent>
             </DescriptionWrapper>
-            <ItemBidWrapper>
+            <ItemWrapper>
                 <Item img={img} />
-
-                {/* {displayBidPrices()} */}
-            </ItemBidWrapper>
+            </ItemWrapper>
+            <CommentsWrapper>{displayComments()}</CommentsWrapper>
+            <StyledCommentInput
+                    placeholder="Comment something..."
+                    allowClear
+                    enterButton="Comment"
+                    size="large"
+                    onSearch={handleComment} />
+            
 
             <BidModal
                 bidderName={myName}
@@ -193,9 +242,9 @@ const Post = ({ seller, title, content, price, img }) => {
                     const {
                         data: { message }
                     } = await axios.post('/bids/title', { 
-                        title, // because we filter posts by checking the title 
                         myName, // 這邊要傳 出價者名字（應該是myName）                    
-                        price, // add above name and this bid price to the bidPrices[] of this <Post>
+                        bPrice, // add above name and this bid price to the bidPrices[] of this <Post>
+                        title, // because we filter posts by checking the title 
                     })
                     console.log(message)
 
@@ -214,7 +263,7 @@ const Post = ({ seller, title, content, price, img }) => {
                 onCancel={() => {
                     setViewBidModalOpen(false);
                 }}
-                displayBidPrices={displayBidPrices()} >
+                displayBidPrices={displayBidPrices(viewBids)} >
             </ShowBidModal>
 
 
