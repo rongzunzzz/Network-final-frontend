@@ -34,8 +34,6 @@ const StyledPhoto = styled.div`
 
 const Title = ({ signedIn, setMyProfileOpen }) => {
     
-    // const [myProfileOpen, setMyProfileOpen] = useState(false);
-    
     const handleClick = () => {
         setMyProfileOpen(curr => !curr);
     }
@@ -48,14 +46,6 @@ const Title = ({ signedIn, setMyProfileOpen }) => {
             signedIn ? 
             <StyledPhoto onClick={handleClick}>
                 <Avatar shape="circle" size={50} icon={<UserOutlined />} />
-                {/* <Profile 
-                    open={myProfileOpen}
-                    onOk={() => {
-                        setMyProfileOpen(false);
-                    }}
-                    onCancel={() => {
-                        setMyProfileOpen(false);
-                    }} /> */}
             </StyledPhoto> : <></>
         }
         

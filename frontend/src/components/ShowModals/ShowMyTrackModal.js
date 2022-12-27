@@ -4,7 +4,7 @@ import { Modal } from "antd";
 const MODAL_HEIGHT = 600;
 const MODAL_WIDTH = 1000;
 
-const MyPostsWrapper = styled.div`
+const MyTrackWrapper = styled.div`
     height: ${MODAL_HEIGHT}px;
     width: ${MODAL_WIDTH * 0.95}px;
     overflow: auto;
@@ -12,10 +12,10 @@ const MyPostsWrapper = styled.div`
     border-radius: 8px;
 `;
 
-const MyPostModal = ({ open, onOk, onCancel, displayMyPosts }) => {
+const ShowMyTrackModal= ({ open, onOk, onCancel, displayMyTrack }) => {
 
     return <Modal
-        title="My Posts"
+        title="My Tracks"
         centered
         open={open}
         onOk={onOk}
@@ -23,11 +23,11 @@ const MyPostModal = ({ open, onOk, onCancel, displayMyPosts }) => {
         width={MODAL_WIDTH} 
         bodyStyle={{height: MODAL_HEIGHT}}
     >
-        <MyPostsWrapper>
-            {displayMyPosts}
-        </MyPostsWrapper>
+        <MyTrackWrapper>
+            {displayMyTrack}
+        </MyTrackWrapper>
         
     </Modal>
 }
 
-export default MyPostModal;
+export default ShowMyTrackModal;

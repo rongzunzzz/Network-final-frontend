@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Modal, Button } from "antd";
 
 import BidModal from "../components/BidModal";
-import ShowBidModal from "../components/ShowBidModal";
+import ShowBidModal from "../components/ShowModals/ShowBidModal";
 import RateModal from "../components/RateModal";
-import ShowRateModal from "../components/ShowRateModal";
+import ShowRateModal from "../components/ShowModals/ShowRateModal";
 import axios from "../api";
 
 import { useState } from "react";
@@ -99,7 +99,7 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
     const handleTrack = async () => {
         const {
             data: { message }
-        } = await axios.post('/tracks/title', {
+        } = await axios.post('/tracks/', {
             myName,
             title,
         })
@@ -108,7 +108,7 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
     const handleViewTrack = async () => {
         const {
             data: { tracks }
-        } = await axios.get(`/tracks${title}`, {
+        } = await axios.get(`/tracks/${title}`, {
             title,
         })
         setViewTracks(tracks);
@@ -118,7 +118,7 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
     const displayTracks = (tk) => {
         return <ShowWrapper> 
                 {tk.map((t, index) => {
-                    return <p key={index} style={{ fontSize: '30px' }} >{`${t}`}</p>
+                    return <p key={index} style={{ fontSize: '30px' }} >{`${t.track_user_name}`}</p>
                 })}
                 </ShowWrapper>
     }

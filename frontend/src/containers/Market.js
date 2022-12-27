@@ -4,7 +4,7 @@ import { Input, Button } from 'antd';
 import Post from './Post';
 import Profile from './Profile';
 import AddPostModal from '../components/AddPostModal';
-import SearchModal from '../components/SearchModal';
+import SearchModal from '../components/ShowModals/SearchModal';
 import axios from "../api";
 
 import { useState, useEffect, useRef } from 'react';
@@ -122,7 +122,7 @@ const Market = ({ myProfileOpen }) => {
             {
                 myProfileOpen ?
                     <Profile myName={myName} 
-                             myProfile={myProfile}
+                             MyProfile={myProfile}
                              displayPosts={displayPosts} /> : <></>
             }
 

@@ -19,8 +19,8 @@ const SignIn = ({ myName }) => {
     // 去看看這個名字有沒有存在在 DB USER table，有就拿到資料登入，沒就新增完在登入
     const getMyProfile = async (myName) => { 
         const {
-            data: { profile } // { account, phoneNum, password, role }
-        } = await axios.get('/profile/', {
+            data: { profile } // { account, phone_num, password, role }
+        } = await axios.get(`/profile/${myName}`, {
             myName, 
         })
         setMyProfile(profile);
