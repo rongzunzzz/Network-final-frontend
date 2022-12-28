@@ -5,9 +5,12 @@
   "repository": "https://github.com/rongzunzzz/Network-final-frontend.git",
   "author": "rongzunzzz",
   "license": "MIT",
-
   "scripts": {
     "start": "cd frontend && yarn start",
     "server": "cd backend && yarn server"
+  },
+  "dependencies": {
+    "firebase": "^9.15.0",
+    "react-router-dom": "^6.6.1"
   }
 }

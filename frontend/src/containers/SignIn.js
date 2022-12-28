@@ -67,7 +67,7 @@ const SignIn = ({ myName }) => {
     const handleRegister = async (account, name, phoneNum, password) => {
         const {
             data: { message }
-        } = await axios.post('/register', {
+        } = await axios.post('/profile/register', {
             account, 
             name, 
             phoneNum, 
