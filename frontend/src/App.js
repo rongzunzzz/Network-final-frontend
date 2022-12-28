@@ -2,10 +2,12 @@ import styled from 'styled-components'
 
 import SignIn from './containers/SignIn';
 import Market from './containers/Market';
-
+import LoginPage from './components/Login_Google';
+import { auth } from './config/firebase';
 import { useState } from 'react';
 import { useMarket } from './containers/hooks/useMarket';
 import Title from './components/Title';
+import Item from './components/Item';
 
 const Wrapper = styled.div`
     display: flex;
@@ -26,7 +28,10 @@ const App = () => {
         <Title signedIn={signedIn} setMyProfileOpen={setMyProfileOpen}/>
         <Wrapper>    
             { signedIn? <Market myProfileOpen={myProfileOpen} /> : <SignIn myName={myName} /> }
-        </Wrapper>    
+        </Wrapper>
+        {/* <Wrapper> */}
+            {/* { signedIn? <LoginPage/> : <SignIn myName={myName}/>} */}
+        {/* </Wrapper> */}
     </>)
 };
 

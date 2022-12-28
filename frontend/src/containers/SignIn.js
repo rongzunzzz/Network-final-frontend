@@ -3,9 +3,18 @@ import styled from "styled-components";
 import LogIn from "../components/LogIn";
 import RegisterModal from "../components/RegisterModal";
 import axios from '../api';
-
+import { Modal, Button } from "antd";
 import { useMarket } from "./hooks/useMarket";
 import { useState } from "react";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth, provide } from "../config/firebase.js";
+
+const StyledButton = styled(Button)`
+    height: 60px;
+    width: 150px;
+    font-size: 15px; font-weight: bold;
+    margin: 15px;
+`;
 
 const Logo = styled.img`
     height: 50%;
@@ -17,7 +26,6 @@ const Logo = styled.img`
 const SignIn = ({ myName }) => {
 
     const { setMyName, setMyProfile, setSignedIn, setAllPosts, popSuccessMsg } = useMarket();
-
     const [registerModalOpen, setRegisterModalOpen] = useState(false);
 
     // 去看看這個名字有沒有存在在 DB USER table，有就拿到資料登入，沒就新增完在登入
@@ -64,32 +72,52 @@ const SignIn = ({ myName }) => {
         }
     }
 
-    const handleRegister = async (account, name, phoneNum, password) => {
+    const handleRegister = async (phoneNum) => {
         const {
             data: { message }
         } = await axios.post('/profile/register', {
-            account, 
-            name, 
+            account: auth.currentUser.displayName,
+            name : auth.currentUser.displayName,
             phoneNum, 
-            password,
+            password: "google",
         })
         popSuccessMsg("Register");
+        console.log(auth.currentUser.displayName);
+        console.log(phoneNum)
+        handleLogin(auth.currentUser.displayName);
+    }
+
+    const handleLoginGoogle = async () => {
+        const provider = provide;
+        const Auth = auth
+        signInWithPopup(Auth, provider)
+        .then(async result => {
+            const user = result.user;
+            console.log(user);
+            console.log(user.displayName)
+            setMyName(user.displayName)
+            handleLogin(user.displayName)
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     return (
         <>
             <Logo src={require('../img/logo.jpg')}  />
-            <LogIn myName={myName} setMyName={setMyName} onLogin={handleLogin} />
+            {/* <LogIn myName={myName} setMyName={setMyName} onLogin={handleLogin} /> */}
             <RegisterModal
                 open={registerModalOpen}
-                onCreate={(account, name, phoneNum, password) => { 
-                    handleRegister(account, name, phoneNum, password);
+                onCreate={(phoneNum) => { 
+                    handleRegister(phoneNum);
                     setRegisterModalOpen(false);
                 }}
                 onCancel={() => {
                     setRegisterModalOpen(false);
                 }} >
             </RegisterModal>
+            <StyledButton onClick={handleLoginGoogle}>使用Google登入</StyledButton>
         </>
     )
 };
