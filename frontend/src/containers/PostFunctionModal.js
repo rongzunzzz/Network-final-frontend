@@ -40,7 +40,7 @@ const StyledButton = styled(Button)`
 
 const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
 
-    const { myName } = useMarket();
+    const { myName, popSuccessMsg } = useMarket();
     const [bidModalOpen, setBidModalOpen] = useState(false);
     const [viewBidModalOpen, setViewBidModalOpen] = useState(false);
     const [viewBids, setViewBids] = useState([]); // [{whoBids: name, price: p}, {}, {}]
@@ -103,6 +103,7 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
             myName,
             title,
         })
+        popSuccessMsg("Track");
     }
 
     const handleViewTrack = async () => {
@@ -174,6 +175,7 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
                         title, // because we filter posts by checking the title 
                     }) 
                     setBidModalOpen(false);
+                    popSuccessMsg("Bid");
                 }}
                 onCancel={() => {
                     setBidModalOpen(false);
@@ -201,6 +203,7 @@ const PostFunctionModal = ({ open, onCancel, onOk, title }) => {
                         title, // because we filter posts by checking the title 
                     }) 
                     setRateModalOpen(false);
+                    popSuccessMsg("Rate");
                 }}
                 onCancel={() => {
                     setRateModalOpen(false);

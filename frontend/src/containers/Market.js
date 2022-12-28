@@ -7,7 +7,7 @@ import AddPostModal from '../components/AddPostModal';
 import SearchModal from '../components/ShowModals/SearchModal';
 import axios from "../api";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useMarket } from './hooks/useMarket';
 
 const AllPostWrapper = styled.div` 
@@ -34,7 +34,7 @@ const StyledSearchBar = styled(Search)`
 `;
 
 const Market = ({ myProfileOpen }) => {
-    const { myName, myProfile, allPosts, addMarketPosts } = useMarket();
+    const { myName, myProfile, allPosts, addMarketPosts, popSuccessMsg } = useMarket();
 
     const [addPostModalOpen, setAddPostModalOpen] = useState(false);
     const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -64,11 +64,6 @@ const Market = ({ myProfileOpen }) => {
                 img={post.postImg} />
         })
     }
-
-    // useEffect(() => {
-    //     setTimeout(getAllPosts, '2000'); // 登入之後會要1.5秒後才顯示出來，之後進入無限query（1.5秒一次，很可怕，但總比沒設定好）
-    //     // displayPosts(allPosts);
-    // }, [allPosts])
 
     return (
         <>
@@ -113,6 +108,7 @@ const Market = ({ myProfileOpen }) => {
                     console.log(message)
                     addMarketPosts(myName, title, content, price, img);
                     setAddPostModalOpen(false);
+                    popSuccessMsg("Add post");
                 }}
                 onCancel={() => {
                     setAddPostModalOpen(false);

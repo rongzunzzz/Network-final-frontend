@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { message } from "antd";
 
 const LOCALSTORAGE_KEY = "save-me";
 const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
@@ -15,6 +16,7 @@ const MarketContext = createContext({
     setAllPosts: () => { },
 
     addMarketPosts: () => { },
+    popSuccessMsg: () => { },
 })
 
 const makePost = (name, title, content, price, img) => ({
@@ -35,6 +37,14 @@ const MarketProvider = (props) => {
     const [signedIn, setSignedIn] = useState(false);
     const [allPosts, setAllPosts] = useState([]); // { seller, title, content, price, img, bidPrices[] }
 
+    const popSuccessMsg = (action) => {
+        const msgContent = {
+            content: `${action} successfully!`, 
+            duration: 1.5
+        }
+        message.success(msgContent)
+    }
+
     const addMarketPosts = (name, title, content, price, img) => {
         const newPost = makePost(name, title, content, price, img)
         setAllPosts([...allPosts, newPost])
@@ -53,6 +63,7 @@ const MarketProvider = (props) => {
                 myProfile, setMyProfile,
                 signedIn, setSignedIn,
                 allPosts, setAllPosts, addMarketPosts,
+                popSuccessMsg,
             }}
             {...props}
         />

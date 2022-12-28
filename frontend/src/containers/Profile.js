@@ -73,7 +73,7 @@ const BecomeSellerButton = styled(Button)`
 
 const Profile = ({ myName, MyProfile, displayPosts }) => {
 
-    const { myProfile, setMyProfile } = useMarket();
+    const { myProfile, setMyProfile, popSuccessMsg } = useMarket();
 
     const [myPosts, setMyPosts] = useState([]);
     const [myPostModalOpen, setMyPostModalOpen] = useState(false);
@@ -112,6 +112,7 @@ const Profile = ({ myName, MyProfile, displayPosts }) => {
             address,
         })
         setMyProfile(profile); // 把 role 從 normal 改成 seller，並加入額外資訊
+        popSuccessMsg("Become seller");
     }
 
     return (
